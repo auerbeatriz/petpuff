@@ -1,5 +1,6 @@
 # PetPuff
 [TRABALHO ACADÊMICO] Estudo de caso de comércio eletrônico
+
 ***Autores:** Beatriz Auer Mariano e Mateus Maioli Giacomin*
 
 ## Resumo do trabalho
