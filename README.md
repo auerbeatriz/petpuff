@@ -1,14 +1,24 @@
 # PetPuff
 [TRABALHO ACADÊMICO] Estudo de caso de comércio eletrônico
 
-***Autores:** Beatriz Auer Mariano e Mateus Maioli Giacomin*
+***Autores:** Beatriz Auer Mariano e Mateus Maioli Giacomin*<br>
+***Coautores:** Isadora Laurindo Brandão*
 
 ## Resumo do trabalho
+Esse trabalho foi desenvolvido ao longo de três disciplinas do curso Bacharelado em Sistemas de Informação.
+
+**2022/1 Introdução a Sistemas de Informação** <br>
 Esse trabalho foi desenvolvido em duas partes.  A primeira se deu com o objetivo de elaborar, organizar e estruturar as informações da empresa, de modo a abranger as áreas de administração que são correlatas ao estudo dos sistemas de informação. Já a segunda parte se deu com a ideação e prototipagem do sistema de comércio eletrônico pensando para a empresa elaborada na primeira parte.
 
 Ambos os trabalhos podem ser acessados aqui:
-[Trabalho 1](https://github.com/auerbeatriz/petpuff/blob/5dc5d0fb398a60e0e3f67f70449735a792eb70be/doc/T1_BeatrizMarianoMateusMaioli.pdf)
-[Trabalho 2](https://github.com/auerbeatriz/petpuff/blob/5dc5d0fb398a60e0e3f67f70449735a792eb70be/doc/T2_BeatrizMarianoMateusMaioli.pdf)
+[Trabalho 1](doc/T1_BeatrizMarianoMateusMaioli.pdf) |
+[Trabalho 2](doc/T2_BeatrizMarianoMateusMaioli.pdf)
+
+**2024/1 Projeto de Sistemas**<br>
+Em um primeiro momento, realizamos a etapa de análise de um sistema de informação. Isso consistiu em levantar e documentar requisitos de acordo com o material desenvolvido em 2022/1, modelar os casos de uso e diagrama de classes do sistema. Você pode acessar a documentação completa aqui: [Análise do Sistema](doc/Trabalho%201%20-%20Analise.pdf).
+
+**2024/1 Desenvolvimento web**<br>
+*Em breve*
 
 ## Resumo da empresa
 
@@ -16,24 +26,24 @@ A PetPuff tem como objetivo produzir pelúcias personalizadas com base nos desen
 
 ### PMC
 
-O PMC do desenvolvimento do site de comércio eletrônico pode ser acessado [aqui](https://github.com/auerbeatriz/petpuff/blob/c91adcdfd7449df85b418fe5f38771ff37f7c66a/doc/PetPuff_PMC.pdf).
+O PMC do desenvolvimento do site de comércio eletrônico pode ser acessado [aqui](doc/PetPuff_PMC.pdf).
 
-![PMC](https://github.com/auerbeatriz/petpuff/raw/main/doc/pmc.png)
+![PMC](doc/pmc.png)
 
 ### Mapa de navegação
 
-![Mapa de navegação do site](https://github.com/auerbeatriz/petpuff/raw/main/doc/sitemap.png)
+![Mapa de navegação do site](doc/sitemap.png)
 
 ### Protótipo: site de comércio eletrônico
 
 O protótipo navegável do site pode ser acessado [aqui](https://xd.adobe.com/view/22463702-5310-42eb-8376-3dc1cf223ecd-7715/?fullscreen&hints=off).
-Já seu modelo em PDF, com todas as páginas compiladas, [aqui](https://github.com/auerbeatriz/petpuff/blob/c91adcdfd7449df85b418fe5f38771ff37f7c66a/doc/PetPuff_Site.pdf).
+Já seu modelo em PDF, com todas as páginas compiladas, [aqui](doc/PetPuff_Site.pdf).
 
-![ImagePlaceholder: site](https://github.com/auerbeatriz/petpuff/raw/main/doc/site.PNG)
+![ImagePlaceholder: site](doc/site.PNG)
 
 ### Protótipo: dashboard (visualização de dados para gerência)
 
 O protótipo navegável do site pode ser acessado [aqui](https://xd.adobe.com/view/12fbce01-c52e-4968-b49c-0b4207d0ee0e-47a8/?fullscreen&hints=off).
-Já seu modelo em PDF, com todas as páginas compiladas, [aqui](https://github.com/auerbeatriz/petpuff/blob/c91adcdfd7449df85b418fe5f38771ff37f7c66a/doc/PetPuff_ADM.pdf).
+Já seu modelo em PDF, com todas as páginas compiladas, [aqui](doc/PetPuff_ADM.pdf).
 
-![ImagePlaceholder: Dashboard](https://github.com/auerbeatriz/petpuff/raw/main/doc/dashboard.PNG)
+![ImagePlaceholder: Dashboard](/doc/dashboard.PNG)
