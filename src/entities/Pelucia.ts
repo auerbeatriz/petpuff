@@ -3,7 +3,7 @@ import { Tamanho } from './Tamanho';
 import { KitMaterial } from './KitMaterial';
 import { Orcamento } from './Orcamento';
 
-@Entity
+@Entity()
 export class Pelucia {
     @PrimaryGeneratedColumn()
     id: number

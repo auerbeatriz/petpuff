@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'ty
 import { Endereco } from './Endereco'
 import { Login } from './Login'
 
-@Entity
+@Entity()
 export class Cliente {
     @PrimaryGeneratedColumn()
     id: number

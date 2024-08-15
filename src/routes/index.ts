@@ -3,6 +3,6 @@ import { SampleController } from '../controllers/sample-controller'
 
 const router = Router();
 
-router.get('/api', SampleController);
+router.get('/sample', SampleController);
 
 export default router
