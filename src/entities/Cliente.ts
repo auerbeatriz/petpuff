@@ -1,4 +1,6 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Endereco } from './Endereco'
+import { Login } from './Login'
 
 @Entity
 export class Cliente {

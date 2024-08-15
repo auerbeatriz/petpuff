@@ -1,5 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { StatusOrcamento } from "../types/enums";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { StatusOrcamento } from '../types/enums';
+import { Pedido } from './Pedido';
+import { Atendimento } from './Atendimento';
+import { Pelucia } from './Pelucia';
 
 @Entity('orcamento')
 export class Orcamento {
@@ -11,10 +14,10 @@ export class Orcamento {
 
     @Column({type: 'date'})
     data_solicitacao: Date
-    
+
     @Column({type: 'date'})
     data_retorno: Date
-    
+
     @Column({type: 'double precision'})
     valor: number
 

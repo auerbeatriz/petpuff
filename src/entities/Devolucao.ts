@@ -1,21 +1,21 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from "typeorm";
-import { Pedido } from "./Pedido";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Pedido } from './Pedido';
 
 @Entity()
 export class Devolucao {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ type: "timestamp" })
+    @Column({ type: 'timestamp' })
     dataSolicitacao: Date
 
-    @Column({ type: "timestamp", nullable: true })
+    @Column({ type: 'timestamp', nullable: true })
     dataPostagem: Date
 
-    @Column({ type: "varchar", length: 25 })
+    @Column({ type: 'varchar', length: 25 })
     codigoCorreios: string
 
     @OneToOne(() => Pedido, pedido => pedido.devolucao)
-    @JoinColumn({ name: "id_pedido" })
+    @JoinColumn({ name: 'id_pedido' })
     pedido: Pedido
 }

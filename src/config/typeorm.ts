@@ -8,7 +8,7 @@ const conn = new DataSource({
     type: 'postgres',
     url: process.env.DATABASE_URL ?? '',
     logging: true,
-    synchronize: true,
+    synchronize: true
 })
 
 conn.initialize()

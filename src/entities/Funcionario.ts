@@ -1,24 +1,24 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from "typeorm";
-import { Cargo } from "./Cargo";
-import { Login } from "./Login";
-import { Setor } from "../types/enums";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Setor } from '../types/enums';
+import { Login } from './Login';
+import { Cargo } from './Cargo';
 
 @Entity()
 export class Funcionario {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ type: "varchar", length: 30 })
+    @Column({ type: 'varchar', length: 30 })
     nome: string
 
-    @Column({ type: "varchar", length: 25 })
+    @Column({ type: 'varchar', length: 25 })
     setor: Setor
 
     @OneToOne(() => Login)
-    @JoinColumn({ name: "id_login" })
+    @JoinColumn({ name: 'id_login' })
     login: Login
 
     @ManyToOne(() => Cargo)
-    @JoinColumn({ name: "id_cargo" })
+    @JoinColumn({ name: 'id_cargo' })
     cargo: Cargo
 }

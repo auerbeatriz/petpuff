@@ -1,5 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { PrecoKitTamanhoPadrao } from "./PrecoKitTamanhoPadrao"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { PrecoKitTamanhoPadrao } from './PrecoKitTamanhoPadrao'
 
 @Entity('tamanho')
 export class Tamanho {

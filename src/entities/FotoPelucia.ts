@@ -1,15 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
-import { Pelucia } from "./Pelucia";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Pelucia } from './Pelucia';
 
 @Entity()
 export class FotoPelucia {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ type: "text" })
+    @Column({ type: 'text' })
     url: string
 
     @ManyToOne(() => Pelucia)
-    @JoinColumn({ name: "id_pelucia" })
+    @JoinColumn({ name: 'id_pelucia' })
     pelucia: Pelucia
 }

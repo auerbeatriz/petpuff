@@ -1,5 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Tamanho } from "./Tamanho";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Tamanho } from './Tamanho';
+import { KitMaterial } from './KitMaterial';
+import { Orcamento } from './Orcamento';
 
 @Entity
 export class Pelucia {
@@ -25,4 +27,7 @@ export class Pelucia {
     @ManyToOne(() => Tamanho)
     @JoinColumn({name: 'id_tamanho'})
     tamanho: Tamanho
+
+    @OneToMany(() => Orcamento, orcamento => orcamento.pelucia)
+    orcamentos: Orcamento[]
 }
