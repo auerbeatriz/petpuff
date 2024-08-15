@@ -40,17 +40,27 @@ O seu arquivo deve conter, pelo menos, as seguintes instruções:
 ```
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "es2016",                                
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "module": "commonjs",
     "rootDir": "./src",
+    "moduleResolution": "node10",
+    "resolveJsonModule": true,
     "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "ts-node": {
+    "files": true
+  }
 }
+
 ```
 
 ### Rodando o código
