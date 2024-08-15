@@ -1,13 +1,8 @@
-import express from 'express'
+import Router from 'express'
+import { SampleController } from '../controllers/sample-controller'
 
-const router = express.Router();
+const router = Router();
 
-router.get('/api', (req, res) => {
-    res.status(200).send({
-        success: 'true',
-        message: 'Seja bem-vinde a PetPuff',
-        version: '1.0.0'
-    });
-});
+router.get('/api', SampleController);
 
 export default router
