@@ -7,6 +7,13 @@ export enum StatusOrcamento {
     ACEITO = 'ACEITO'
 }
 
+export enum MetodoPagamento {
+    CREDITO = 'CARTÃO DE CRÉDITO',
+    DEBITO = 'CARTAO DE DEBITO',
+    PIX = 'PIX',
+    BOLETO = 'BOLETO BANCÁRIO'
+}
+
 export enum MetodoEntrega {
     PAC = 'CORREIOS - PAC',
     SEDEX = 'CORREIOS - SEDEX',
