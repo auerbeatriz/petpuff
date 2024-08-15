@@ -20,6 +20,70 @@ Em um primeiro momento, realizamos a etapa de análise de um sistema de informa�
 **2024/1 Desenvolvimento web**<br>
 *Em breve*
 
+## Guia de desenvolvimento
+
+Esse repositório contem as APIs do sistema e retorna dados crus em formato JSON, tal qual estudado na disciplina de desenvolvimento web.
+
+Todo o código do backend está escrito em **typescript**.
+
+**NÃO** suba para o repositório:
+* A pasta `dist`
+* A pasta `node_modules`
+* O arquivo `package-lock.json`
+* O arquivo `.env`
+* O arquivo `tsconfig.json`
+
+### Arquivo tsconfig.json
+
+O seu arquivo deve conter, pelo menos, as seguintes instruções:
+
+```
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+### Rodando o código
+
+Para iniciar o servidor, rode o comando `npm run start`.
+
+### Mensagens de commit
+
+É de bom tom manter um padrão ao enviar commits para o repositório.
+
+* `feat` seu código adiciona uma nova feature (funcionalidade)
+* `fix` seu código está corrigindo algum bug
+* `chore` uma tarefa simples que ficou para trás, como atualizar esse arquivo
+* `refactor` reescrita de parte do código (otimização, nomes de variáveis e arquivos, etc. Cuidado para não confundir com uma feature)
+
+### Padrões de código
+
+Também é de bom tom manter padrões de desenvolvimento e escrita de código. Sugestões:
+
+* Instale o **Eslint** e o **Prettier**
+* Uso de aspas simples
+* Nomes de **variáveis** sempre minúsculas, sempre descritivas, uso de camel case
+    * Bom nome de variável: nomeCliente
+    * Péssimo nome de variável: N
+* Nomes de **classes** sempre começam em maiúsculo
+    * Exemplo: MinhaClasse
+    * Exemplo ruim: MINHACLASSE
+* Uso de aspas simpels (padrão da comunidade de devs javascript/typescrit)
+* Evitar o uso de ponto e vírgula (padrão da comunidade de devs javascript/typescrit)
+* Evitar comentários em excesso
+* Evitar funções gigantescas. Tente quebrá-las em funções menores e mais descritivas ("é mais fácil entender o que 10 funções de 10 linhas fazem do que 1 função de 100")
+
+
 ## Resumo da empresa
 
 A PetPuff tem como objetivo produzir pelúcias personalizadas com base nos desenhos e   descrição de seus clientes – em geral, crianças. Frente às mudanças mercadológicas e a   possibilidade de alcance de novos clientes, a empresa busca se adaptar às novas tecnologias e  implementar um sistema de comércio eletrônico integrado aos sistemas de transações da  empresa (estoque, relacionamento com o cliente, contabilidade, produção e despacho), de modo  a expandir o mercado consumidor para todos os estados do Brasil
