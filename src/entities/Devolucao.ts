@@ -1,18 +1,18 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { Pedido } from './Pedido';
 
-@Entity()
+@Entity('devolucao')
 export class Devolucao {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'timestamp', nullable: true, name: 'data_solicitacao' })
     dataSolicitacao: Date
 
-    @Column({ type: 'timestamp', nullable: true })
+    @Column({ type: 'timestamp', nullable: true, name: 'data_postagem' })
     dataPostagem: Date
 
-    @Column({ type: 'varchar', length: 25 })
+    @Column({ type: 'varchar', length: 25, nullable: true, name: 'codigo_correios' })
     codigoCorreios: string
 
     @OneToOne(() => Pedido, pedido => pedido.devolucao)

@@ -3,7 +3,7 @@ import { Setor } from '../types/enums';
 import { Login } from './Login';
 import { Cargo } from './Cargo';
 
-@Entity()
+@Entity('funcionario')
 export class Funcionario {
     @PrimaryGeneratedColumn()
     id: number

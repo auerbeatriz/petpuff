@@ -3,7 +3,7 @@ import { Cliente } from './Cliente';
 import { Funcionario } from './Funcionario';
 import { Orcamento } from './Orcamento';
 
-@Entity()
+@Entity('atendimento')
 export class Atendimento {
     @PrimaryGeneratedColumn()
     id: number
@@ -16,7 +16,7 @@ export class Atendimento {
     @JoinColumn({ name: 'id_funcionario' })
     funcionario: Funcionario
 
-    @Column({ type: 'varchar', length: 10 })
+    @Column({ type: 'varchar', length: 10, name: 'numero_atendimento' })
     numeroAtendimento: string
 
     @OneToMany(() => Orcamento, orcamento => orcamento.atendimento)

@@ -9,32 +9,29 @@ export class Orcamento {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type: 'varchar'})
-    numero_orcamento: string
+    @Column({type: 'varchar', name: 'numero_orcamento'})
+    numeroOrcamento: string
 
-    @Column({type: 'date'})
-    data_solicitacao: Date
+    @Column({type: 'date', name: 'data_solicitacao'})
+    dataSolicitacao: Date
 
-    @Column({type: 'date'})
-    data_retorno: Date
+    @Column({type: 'date', name: 'data_retorno'})
+    dataRetorno: Date
 
     @Column({type: 'double precision'})
     valor: number
 
-    @Column({type: 'date'})
-    prazo_confeccao: Date
+    @Column({type: 'date', name: 'prazo_confeccao'})
+    prazoConfeccao: Date
 
-    @Column({type: 'text'})
-    informacoes_adicionais: string
+    @Column({type: 'text', name: 'informacoes_adicionais'})
+    informacoesAdicionais: string
 
-    @Column({type: 'date'})
-    data_expiracao: Date
+    @Column({type: 'date', name: 'data_expiracao'})
+    dataExpiracao: Date
 
     @Column({type: 'varchar'})
     status: StatusOrcamento
-
-    @Column({type: 'integer'})
-    id_orcamento_anterior: number
 
     @ManyToOne(() => Orcamento, orcamento => orcamento.novasCotacoes)
     @JoinColumn({name: 'id_orcamento_anterior'})

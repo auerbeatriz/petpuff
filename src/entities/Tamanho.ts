@@ -9,7 +9,7 @@ export class Tamanho {
     @Column({type: 'decimal'})
     altura: number
 
-    @Column({type: 'varchar'})
+    @Column({type: 'varchar', nullable: true})
     nome: string
 
     @Column({ type: 'boolean'})

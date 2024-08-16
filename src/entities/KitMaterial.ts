@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMan
 import { Material } from './Material';
 import { PrecoKitTamanhoPadrao } from './PrecoKitTamanhoPadrao';
 
-@Entity()
+@Entity('kit_material')
 export class KitMaterial {
     @PrimaryGeneratedColumn()
     id: number;

@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import { KitMaterial } from './KitMaterial';
 
-@Entity()
+@Entity('material')
 export class Material {
     @PrimaryGeneratedColumn()
     id: number

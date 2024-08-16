@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'ty
 import { Endereco } from './Endereco'
 import { Login } from './Login'
 
-@Entity()
+@Entity('cliente')
 export class Cliente {
     @PrimaryGeneratedColumn()
     id: number
@@ -19,7 +19,7 @@ export class Cliente {
     @Column({type: 'varchar'})
     email: string
 
-    @Column({type: 'char'})
+    @Column({type: 'char', nullable: true})
     celular: string
 
     @OneToOne(() => Login)

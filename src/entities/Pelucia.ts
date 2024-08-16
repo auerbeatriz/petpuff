@@ -3,22 +3,22 @@ import { Tamanho } from './Tamanho';
 import { KitMaterial } from './KitMaterial';
 import { Orcamento } from './Orcamento';
 
-@Entity()
+@Entity('pelucia')
 export class Pelucia {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type: 'varchar'})
+    @Column({type: 'varchar', nullable: true})
     nome: string
 
     @Column({type: 'text'})
     detalhes: string
 
-    @Column({type: 'varchar'})
-    nome_presenteado: string
+    @Column({type: 'varchar', nullable: true, name: 'nome_presenteado'})
+    nomePresenteado: string
 
-    @Column({type: 'varchar'})
-    mensagem_presente: string
+    @Column({type: 'varchar', nullable: true, name: 'mensagem_presente'})
+    mensagemPresente: string
 
     @ManyToOne(() => KitMaterial)
     @JoinColumn({name: 'id_kit_material'})

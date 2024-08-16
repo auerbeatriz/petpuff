@@ -4,15 +4,15 @@ import { Pagamento } from './Pagamento';
 import { Devolucao } from './Devolucao';
 import { Orcamento } from './Orcamento';
 
-@Entity()
+@Entity('pedido')
 export class Pedido {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'timestamp', nullable: true, name: 'data_realizacao' })
     dataRealizacao: Date
 
-    @Column({ type: 'double precision' })
+    @Column({ type: 'double precision', nullable: true, name: 'valor_total' })
     valorTotal: number
 
     @OneToMany(() => Orcamento, orcamento => orcamento.pedido)

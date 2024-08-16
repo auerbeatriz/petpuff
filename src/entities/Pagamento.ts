@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne
 import { Pedido } from './Pedido';
 import { MetodoPagamento } from '../types/enums';
 
-@Entity()
+@Entity('pagamento')
 export class Pagamento {
     @PrimaryGeneratedColumn()
     id: number
@@ -13,7 +13,7 @@ export class Pagamento {
     @Column({ type: 'double precision' })
     valor: number
 
-    @Column({ type: 'varchar', length: 17 })
+    @Column({ type: 'varchar', length: 17, nullable: true, name: 'metodo_pagamento' })
     metodoPagamento: MetodoPagamento
 
     @OneToOne(() => Pedido, pedido => pedido.pagamento)

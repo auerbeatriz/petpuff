@@ -7,7 +7,7 @@ dotenv.config()
 export const DataBaseConnection = new DataSource({
     type: 'postgres',
     url: process.env.DATABASE_URL ?? '',
-    logging: true,
+    logging: false,
     synchronize: true,
-    entities: [`${__dirname}/**/entities/*.{ts,js}`]
+    entities: [__dirname + '/../entities/**/*.{ts,js}'],
 })

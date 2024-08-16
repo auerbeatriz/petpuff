@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Bairro } from './Bairro';
 
-@Entity()
+@Entity('endereco')
 export class Endereco {
     @PrimaryGeneratedColumn()
     id: number
