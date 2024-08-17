@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { KitMaterialRepository } from "../repositories/kitMaterialRepository";
+import { KitMaterialRepository } from "../repositories/KitMaterialRepository";
 
 export class KitMaterialController {
     async getKitsMateriais(req: Request, res: Response) {

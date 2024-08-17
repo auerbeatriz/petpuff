@@ -4,12 +4,13 @@ import { Tamanho } from './Tamanho';
 
 @Entity('preco_kit_tamanhopadrao')
 export class PrecoKitTamanhoPadrao {
-    @PrimaryColumn({type: 'integer'})
+    @PrimaryGeneratedColumn()
+    id: number
+
     @ManyToOne(() => KitMaterial, kitMaterial => kitMaterial.precoTamanhoPadrao)
     @JoinColumn({ name: 'id_kitmaterial' })
     kitMaterial: KitMaterial
 
-    @PrimaryColumn({type: 'integer'})
     @ManyToOne(() => Tamanho, tamanho => tamanho.precoTamanhoPadrao)
     @JoinColumn({ name: 'id_tamanho' })
     tamanho: Tamanho
