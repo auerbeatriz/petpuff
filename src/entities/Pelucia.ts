@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Tamanho } from './Tamanho';
 import { KitMaterial } from './KitMaterial';
 import { Orcamento } from './Orcamento';
+import { FotoPelucia } from './FotoPelucia';
 
 @Entity('pelucia')
 export class Pelucia {
@@ -30,4 +31,7 @@ export class Pelucia {
 
     @OneToMany(() => Orcamento, orcamento => orcamento.pelucia)
     orcamentos: Orcamento[]
+
+    @OneToMany(() => FotoPelucia, foto => foto.pelucia)
+    fotos: FotoPelucia[]
 }

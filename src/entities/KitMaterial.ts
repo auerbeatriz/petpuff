@@ -11,8 +11,8 @@ export class KitMaterial {
     nome: string;
 
     @ManyToMany(() => Material, material => material.kits)
-    @JoinTable({
-        name: 'Material_KitMaterial',
+    @JoinTable ({
+        name: 'material_kitmaterial',
         joinColumn: { name: 'id_kit_material', referencedColumnName: 'id' },
         inverseJoinColumn: { name: 'id_material', referencedColumnName: 'id' }
     })

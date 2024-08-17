@@ -9,7 +9,7 @@ export class FotoPelucia {
     @Column({ type: 'text' })
     url: string
 
-    @ManyToOne(() => Pelucia)
+    @ManyToOne(() => Pelucia, pelucia => pelucia.fotos)
     @JoinColumn({ name: 'id_pelucia' })
     pelucia: Pelucia
 }
