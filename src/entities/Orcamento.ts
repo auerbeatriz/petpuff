@@ -9,25 +9,25 @@ export class Orcamento {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type: 'varchar', name: 'numero_orcamento'})
-    numeroOrcamento: string
+    @Column({type: 'integer', name: 'numero_orcamento' })
+    numeroOrcamento: number
 
     @Column({type: 'date', name: 'data_solicitacao'})
     dataSolicitacao: Date
 
-    @Column({type: 'date', name: 'data_retorno'})
+    @Column({type: 'date', name: 'data_retorno', nullable: true})
     dataRetorno: Date
 
-    @Column({type: 'double precision'})
+    @Column({type: 'double precision', nullable: true})
     valor: number
 
-    @Column({type: 'date', name: 'prazo_confeccao'})
+    @Column({type: 'date', name: 'prazo_confeccao', nullable: true})
     prazoConfeccao: Date
 
-    @Column({type: 'text', name: 'informacoes_adicionais'})
+    @Column({type: 'text', name: 'informacoes_adicionais', nullable: true})
     informacoesAdicionais: string
 
-    @Column({type: 'date', name: 'data_expiracao'})
+    @Column({type: 'date', name: 'data_expiracao', nullable: true})
     dataExpiracao: Date
 
     @Column({type: 'varchar'})

@@ -9,7 +9,7 @@ export class Pelucia {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type: 'varchar', nullable: true})
+    @Column({type: 'varchar'})
     nome: string
 
     @Column({type: 'text'})

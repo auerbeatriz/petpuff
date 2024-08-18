@@ -16,9 +16,12 @@ export class Atendimento {
     @JoinColumn({ name: 'id_funcionario' })
     funcionario: Funcionario
 
-    @Column({ type: 'varchar', length: 10, name: 'numero_atendimento' })
-    numeroAtendimento: string
+    @Column({ type: 'integer', name: 'numero_atendimento' })
+    numeroAtendimento: number
 
     @OneToMany(() => Orcamento, orcamento => orcamento.atendimento)
     orcamentos: Orcamento[]
+
+    @Column({ name: 'esta_aberto', type: 'boolean' })
+    estaAberto: boolean
 }

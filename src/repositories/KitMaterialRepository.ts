@@ -4,6 +4,10 @@ import { KitMaterial } from "../entities/KitMaterial";
 export class KitMaterialRepository {
     static repository = DataBaseConnection.getRepository(KitMaterial)
 
+    static async get(id: number | undefined) {
+        return await this.repository.find({ where: { id } })
+    }
+
     static async getKits() {
         return await this.repository.createQueryBuilder("kit_material")
             .leftJoinAndSelect("kit_material.materiais", "material")

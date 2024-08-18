@@ -7,19 +7,19 @@ export class Cliente {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type: 'varchar'})
+    @Column({type: 'varchar', nullable: true})
     nome: string
 
-    @Column({type: 'varchar'})
+    @Column({type: 'varchar', nullable: true})
     sobrenome:string
 
-    @Column({type: 'char'})
+    @Column({type: 'char', length: '11', nullable: true})
     cpf: string
 
-    @Column({type: 'varchar'})
+    @Column({type: 'varchar', nullable: true})
     email: string
 
-    @Column({type: 'char', nullable: true})
+    @Column({type: 'char', length: '11', nullable: true})
     celular: string
 
     @OneToOne(() => Login)
