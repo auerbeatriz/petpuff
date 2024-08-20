@@ -37,6 +37,32 @@ export class OrcamentoController {
         }
     }
 
+    async getOrcamentosCliente(req: Request, res: Response) {
+        try {
+            const { clienteId } = req.params
+            if(!clienteId) {
+                throw new BadRequestError(`Nenhum cliente associado ao id ${ clienteId }`)
+            }
+
+            const orcamentos = await OrcamentoRepository.getOrcamentosCliente(Number(clienteId))
+            const response = orcamentos.map(orcamento => {
+                return {
+                    ...orcamento,
+                    pelucia: {
+                        ...orcamento.pelucia,
+                        fotos: orcamento.pelucia.fotos.map(({ url }) => url)
+                    }
+                }
+            })
+
+            res.status(200).json(response)
+        } catch(error) {
+            const message = 'Não foi possível obter os orçamentos.'
+            const status = (error instanceof BadRequestError) ? 404 : 500
+            res.status(status).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
     private async createPelucia(input: CriarOrcamentoPayload): Promise<Pelucia> {
         const tamanho = await TamanhoRepository.create(input.tamanho) 
         const kitMaterial = input.kitMaterialId  ? (await KitMaterialRepository.get(input.kitMaterialId))[0] : undefined
