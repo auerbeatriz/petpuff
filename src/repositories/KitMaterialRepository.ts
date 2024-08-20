@@ -19,8 +19,7 @@ export class KitMaterialRepository {
                 "material.nome", 
                 "material.descricao",
                 "precoKitTamanhoPadrao.valor",
-                "tamanho.nome",
-                "tamanho.altura"
+                "tamanho.id"
             ])
             .getMany()
     }

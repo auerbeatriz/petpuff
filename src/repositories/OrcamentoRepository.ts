@@ -8,7 +8,7 @@ import { StatusOrcamento } from "../types/enums";
 export class OrcamentoRepository {
     static repository = DataBaseConnection.getRepository(Orcamento)
 
-    static async create(atendimento: Atendimento, pelucia: Pelucia) {
+    static async create(atendimento: Atendimento, pelucia: Pelucia): Promise<Orcamento> {
         const orcamento = this.repository.create({
             dataSolicitacao: new Date(),
             status: StatusOrcamento.NOVO,
@@ -21,7 +21,7 @@ export class OrcamentoRepository {
         return orcamento
     }
 
-    static async getOrcamentosCliente(clienteId: number) {
+    static async getOrcamentosCliente(clienteId: number): Promise<Orcamento[]> {
         return await this.repository.find({
             select: {
                 id: true,
@@ -29,6 +29,7 @@ export class OrcamentoRepository {
                 status: true,
                 dataSolicitacao: true,
                 dataExpiracao: true,
+                valor: true,
                 pelucia: {
                     id: true,
                     nome: true,
@@ -47,6 +48,58 @@ export class OrcamentoRepository {
                     cliente: { id: clienteId }
                 }
             }
-        })        
+        })
+    }
+
+    static async getOrcamento(id: number): Promise<Orcamento> {
+        const [ orcamento ] = await this.repository.find({
+            where: { id },
+            select: {
+                numeroOrcamento: true,
+                status: true,
+                dataSolicitacao: true,
+                dataRetorno: true,
+                dataExpiracao: true,
+                valor: true, 
+                prazoConfeccao: true,
+                informacoesAdicionais: true,
+                orcamentoAnterior: { 
+                    id: true 
+                },
+                pedido: {
+                    id: true
+                },
+                pelucia: {
+                    id: true,
+                    nome: true,
+                    detalhes: true
+                },
+                atendimento: {
+                    id: true,
+                    funcionario: {
+                        nome: true
+                    }
+                }
+            },
+            relations: {
+                pelucia: {
+                    fotos: true,
+                    tamanho: true,
+                    kitMaterial: {
+                        materiais: true,
+                        precoTamanhoPadrao: {
+                            tamanho: true
+                        }
+                    }
+                },
+                atendimento: {
+                    funcionario: true
+                },
+                pedido: true,
+                orcamentoAnterior: true
+            }
+        })
+
+        return orcamento
     }
 }

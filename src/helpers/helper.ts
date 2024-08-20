@@ -1,4 +1,4 @@
-import { BadRequestError } from "../erros/BadRequestError"
+import { BadRequestError } from "../types/erros/BadRequestError"
 
 export class CommonHelper {
     static validarInput(schema: string[], requestBody: any) {

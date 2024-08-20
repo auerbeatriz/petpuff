@@ -11,11 +11,14 @@ const orcamentoController = new OrcamentoController()
 router.get('/sample', SampleController)
 
 // Cliente
-router.get('/cliente/:clienteId/orcamentos', (req, res) => orcamentoController.getOrcamentosCliente(req, res) )
+router.get('/cliente/:id/orcamentos', (req, res) => orcamentoController.getOrcamentosCliente(req, res) )
 
 // Personalizar pelucia
 router.get('/tamanhos', new TamanhoController().getTamanhos)
 router.get('/kits-materiais', new KitMaterialController().getKitsMateriais)
-router.post('/cliente/:clienteId/orcamento', (req, res) => orcamentoController.create(req, res))
+router.post('/cliente/:id/orcamento', (req, res) => orcamentoController.create(req, res))
+
+// Orcamento
+router.get('/orcamento/:id', (req, res) => orcamentoController.getOrcamento(req, res) )
 
 export default router

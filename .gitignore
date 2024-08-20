@@ -4,3 +4,5 @@
 package-lock.json
 tsconfig.json
 bd.sql
+.eslintrc.js
+.prettierrc.json
