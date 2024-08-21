@@ -78,6 +78,9 @@ export class OrcamentoRepository {
                     id: true,
                     funcionario: {
                         nome: true
+                    },
+                    cliente: {
+                        id: true
                     }
                 }
             },
@@ -93,7 +96,8 @@ export class OrcamentoRepository {
                     }
                 },
                 atendimento: {
-                    funcionario: true
+                    funcionario: true,
+                    cliente: true
                 },
                 pedido: true,
                 orcamentoAnterior: true

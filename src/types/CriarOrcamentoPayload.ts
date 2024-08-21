@@ -20,5 +20,6 @@ export interface CriarOrcamentoPayload {
     fotos: string[]
     tamanho: TamanhoInterface
     kitMaterialId?: number
-    detalhes?: string
+    detalhes?: string,
+    clienteId: number
 }
