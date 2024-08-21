@@ -5,6 +5,7 @@ import { Tamanho } from "../entities/Tamanho";
 import { AtendimentoRepository } from "../repositories/AtendimentoRepository";
 import { OrcamentoRepository } from "../repositories/OrcamentoRepository";
 import { CriarOrcamentoPayload } from "../types/CriarOrcamentoPayload";
+import { BadRequestError } from "../types/erros/BadRequestError";
 import { PeluciaService } from "./PeluciaService";
 
 export class OrcamentoService {
@@ -14,7 +15,7 @@ export class OrcamentoService {
         this.peluciaService = new PeluciaService()
     }
 
-    async criarOrcamento(input: CriarOrcamentoPayload): Promise<Orcamento> {
+    async criar(input: CriarOrcamentoPayload): Promise<Orcamento> {
         const pelucia = await this.peluciaService.criarPelucia(input)
         const atendimento = await this.criarAtendimento(input.clienteId)
         const orcamento = await OrcamentoRepository.create(atendimento, pelucia)
@@ -48,6 +49,10 @@ export class OrcamentoService {
 
     async getOrcamento(orcamentoId: number) {
         const orcamento = await OrcamentoRepository.getOrcamento(orcamentoId)
+
+        if(!orcamento) {
+            throw new BadRequestError(`Nenhum orçamento com id: ${orcamentoId} encontrado`)
+        }
 
         const { 
             pelucia, 
@@ -109,5 +114,19 @@ export class OrcamentoService {
 
             return valorMinimo
         }
+    }
+
+    async delete(orcamentoId: number): Promise<void> {
+        const orcamento = await OrcamentoRepository.getOrcamentoMinimo(orcamentoId)
+
+        if(!orcamento) {
+            throw new BadRequestError(`Orçamento de id: ${ orcamentoId } não existe ou não está cancelado.`)
+        }
+
+        const { id, fotos } = orcamento.pelucia
+        const fotosId = fotos.map(({id}) => id)
+
+        await this.peluciaService.delete(id, fotosId)
+        await OrcamentoRepository.deleteOrcamento(orcamentoId)
     }
 }

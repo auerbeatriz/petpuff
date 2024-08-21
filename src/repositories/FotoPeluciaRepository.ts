@@ -11,4 +11,15 @@ export class FotoPeluciaRepository {
 
         await this.repository.insert(valores)
     }
+
+    static async deleteAll(ids: number[]) {
+        if (ids.length !== 0) {
+            return await this.repository
+            .createQueryBuilder()
+            .delete()
+            .from(FotoPelucia)
+            .where('id IN (:...ids)', { ids })
+            .execute()   
+        }
+    }
 }

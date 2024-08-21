@@ -1,3 +1,4 @@
+import { DeleteResult } from "typeorm";
 import { DataBaseConnection } from "../config/typeorm";
 import { Atendimento } from "../entities/Atendimento";
 import { FotoPelucia } from "../entities/FotoPelucia";
@@ -105,5 +106,38 @@ export class OrcamentoRepository {
         })
 
         return orcamento
+    }
+
+    static async getOrcamentoMinimo(id: number): Promise<Orcamento> {
+        const [ orcamento ] = await this.repository.find({
+            where: { 
+                id,
+                status: StatusOrcamento.CANCELADO
+             },
+            select: {
+                pelucia: {
+                    id: true,
+                    fotos: {
+                        id: true
+                    }
+                }
+            },
+            relations: {
+                pelucia: {
+                    fotos: true
+                }
+            }
+        })
+
+        return orcamento
+    }
+
+    static async deleteOrcamento(id: number): Promise<DeleteResult> {
+        return await this.repository
+        .createQueryBuilder()
+        .delete()
+        .from(Orcamento)
+        .where(`id = ${id} and status = '${ StatusOrcamento.CANCELADO }'`)
+        .execute()
     }
 }

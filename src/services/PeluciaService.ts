@@ -6,7 +6,6 @@ import { TamanhoRepository } from "../repositories/TamanhoRepository";
 import { CriarOrcamentoPayload } from "../types/CriarOrcamentoPayload";
 
 export class PeluciaService {
-    
     async criarPelucia(input: CriarOrcamentoPayload): Promise<Pelucia> {
         const tamanho = await TamanhoRepository.create(input.tamanho) 
         const kitMaterial = input.kitMaterialId  ? (await KitMaterialRepository.get(input.kitMaterialId))[0] : undefined
@@ -21,5 +20,10 @@ export class PeluciaService {
         await FotoPeluciaRepository.create(input.fotos, pelucia.id)
 
         return pelucia
+    }
+
+    async delete(id: number, fotosId: number[]) {
+        await FotoPeluciaRepository.deleteAll(fotosId)
+        await PeluciaRepository.delete(id)
     }
 }

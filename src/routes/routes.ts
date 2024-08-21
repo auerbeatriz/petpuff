@@ -19,6 +19,8 @@ router.get('/kits-materiais', new KitMaterialController().getKitsMateriais)
 router.post('/cliente/:id/orcamento', (req, res) => orcamentoController.create(req, res))
 
 // Orcamento
-router.get('/orcamento/:id', (req, res) => orcamentoController.getOrcamento(req, res) )
+router.get('/orcamento/:id', (req, res) => orcamentoController.getOrcamento(req, res))
+router.delete('/orcamento/:id', (req, res) => orcamentoController.deleteOrcamento(req, res) )
+
 
 export default router
