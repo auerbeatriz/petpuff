@@ -16,7 +16,7 @@ router.get('/cliente/:id/orcamentos', (req, res) => orcamentoController.getOrcam
 // Personalizar pelucia
 router.get('/tamanhos', new TamanhoController().getTamanhos)
 router.get('/kits-materiais', new KitMaterialController().getKitsMateriais)
-router.post('/cliente/:id/orcamento', (req, res) => orcamentoController.create(req, res))
+router.post('/orcamento', (req, res) => orcamentoController.create(req, res))
 
 // Orcamento
 router.get('/orcamento/:id', (req, res) => orcamentoController.getOrcamento(req, res))

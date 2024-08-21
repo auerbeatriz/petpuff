@@ -16,16 +16,14 @@ export class OrcamentoController {
     async create(req: Request, res: Response) {
         try {
             CommonHelper.validarInput(Schema.CRIAR_ORCAMENTO, req.body)
-
             const input = req.body
-            const { id } = req.params
 
-            const cliente = await ClienteRepository.get(Number(id))
+            const cliente = await ClienteRepository.get(Number(input.clienteId))
             if(!cliente) {
-                throw new BadRequestError(`Nenhum cliente associado ao id ${ id }`)
+                throw new BadRequestError(`Nenhum cliente associado ao id ${ input.clienteId }`)
             }
 
-            const orcamento = await this.service.criar({...input, clienteId: Number(id)})
+            const orcamento = await this.service.criar({...input, clienteId: Number(input.clienteId)})
             
             res.status(201).json({ numeroOrcamento: orcamento.id })
         } catch(error) {
@@ -78,7 +76,7 @@ export class OrcamentoController {
             }
 
             await this.service.delete(Number(id))
-            res.status(200).json()
+            res.status(204).json()
         } catch(error) {
             const message = 'Não foi possível fazer a exclusão.'
             const status = (error instanceof BadRequestError) ? 404 : 500
