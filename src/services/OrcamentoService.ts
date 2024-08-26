@@ -113,6 +113,7 @@ export class OrcamentoService {
 
     async responderOrcamento(input: ResponderOrcamentoPayload): Promise<void> {
         const statusOrcamento = (await OrcamentoRepository.getStatusOrcamento(input.id)).status
+        let updated = false
 
         if(statusOrcamento === StatusOrcamento.NOVO) {
             //todo: get idFuncionario associado ao Authorization
@@ -125,7 +126,13 @@ export class OrcamentoService {
                 input.updateDates = true
             }
         
-            await OrcamentoRepository.responderOrcamento(input);
+            await OrcamentoRepository.responderOrcamento(input)
+
+            updated = true
+        }
+
+        if(!updated) {
+            throw new BadRequestError('Status do orçamento não permite atualizações.')
         }
     }
 

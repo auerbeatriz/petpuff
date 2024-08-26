@@ -11,18 +11,19 @@ export class TamanhoRepository {
             where: {
                 padrao: params.padrao,
                 altura: params.altura,
-                nome: params.nome
+                nome: params.nome,
+                id: params.id
             }
         })
     }
 
     static async create(input: TamanhoInterface) {
-        let [ tamanho ] = await this.get({ altura: input.altura, nome: input.nome })
+        let [ tamanho ] = await this.get({ altura: input.altura, nome: input.nome, id: input.id })
 
         if(!tamanho) {
             tamanho = this.repository.create({
                 altura: input.altura,
-                padrao: input.padrao,
+                padrao: input.padrao ?? false,
                 nome: input.nome
             })
     

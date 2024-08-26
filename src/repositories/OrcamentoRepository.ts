@@ -161,8 +161,6 @@ export class OrcamentoRepository {
                 status: StatusOrcamento.RESPONDIDO
             }
         }
-
-        console.log(updateClause)
         
         await this.repository.update(
             id, 

@@ -109,14 +109,30 @@ export class OrcamentoController {
             await this.orcamentoService.responderOrcamento({...input, id: Number(id)})
             res.status(204).json()
         } catch(error) {
-            const message = 'Não foi possível criar o orçamento.'
+            const message = 'Não foi possível responder o orçamento.'
             const status = (error instanceof BadRequestError) ? 404 : 500
             res.status(status).json({ message, erro: (error as Error).message }) 
         }
     }
 
     async atualizarPelucia(req: Request, res: Response) {
-        // todo
+        try {
+            CommonHelper.validarInput(Schema.ATUALIZAR_PELUCIA, req.body)
+           
+            const input = req.body
+            const { id } = req.params
+            
+            if(!id) {
+                throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
+            }
+
+            await this.peluciaService.atualizar(Number(id), input)
+            res.status(204).json()
+        } catch(error) {
+            const message = 'Não foi possível atualizar a pelúcia.'
+            const status = (error instanceof BadRequestError) ? 404 : 500
+            res.status(status).json({ message, erro: (error as Error).message }) 
+        }
     }
 
     async deleteOrcamento(req: Request, res: Response) {
