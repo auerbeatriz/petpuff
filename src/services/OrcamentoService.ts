@@ -6,6 +6,7 @@ import { Tamanho } from "../entities/Tamanho";
 import { AtendimentoRepository } from "../repositories/AtendimentoRepository";
 import { OrcamentoRepository } from "../repositories/OrcamentoRepository";
 import { ResponderOrcamentoPayload } from "../types/AtualizarOrcamentoPayload";
+import { CriarOrcamentoPayload } from "../types/CriarOrcamentoPayload";
 import { StatusOrcamento } from "../types/enums";
 import { BadRequestError } from "../types/erros/BadRequestError";
 
@@ -25,6 +26,27 @@ export class OrcamentoService {
         }
 
         return await AtendimentoRepository.create(clienteId)        
+    }
+
+    async reabrirOrcamento(idOrcamentoAnterior: number): Promise<CriarOrcamentoPayload> {
+        const orcamentoAnterior = await OrcamentoRepository.getOrcamento(idOrcamentoAnterior)
+        
+        if(![StatusOrcamento.EXPIRADO].includes(orcamentoAnterior.status)) {
+            throw new BadRequestError('O orçamento não existe ou não pode ser reaberto (não expirado).')
+        }
+
+        return {
+            clienteId: orcamentoAnterior.atendimento.cliente.id,
+            fotos: orcamentoAnterior.pelucia.fotos.map(({ url }) => url),
+            nome: orcamentoAnterior.pelucia.nome,
+            detalhes: orcamentoAnterior.pelucia.detalhes,
+            tamanho: {
+                padrao: orcamentoAnterior.pelucia.tamanho.padrao,
+                id: orcamentoAnterior.pelucia.tamanho.id,
+                altura: orcamentoAnterior.pelucia.tamanho.altura
+            },
+            kitMaterialId: orcamentoAnterior.pelucia.kitMaterial.id
+        }
     }
 
     async getOrcamentosCliente(clienteId: number) {

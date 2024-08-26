@@ -38,6 +38,26 @@ export class OrcamentoController {
         }
     }
 
+    async reabrirOrcamento(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            if(!id) {
+                throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
+            }
+
+            const payload = await this.orcamentoService.reabrirOrcamento(Number(id))
+
+            const pelucia = await this.peluciaService.criarPelucia(payload)
+            const orcamento = await this.orcamentoService.criar(payload.clienteId, pelucia)
+
+            res.status(201).json({"id": orcamento.id})
+        } catch(error) {
+            const message = 'Não foi possível atualizar a pelúcia.'
+            const status = (error instanceof BadRequestError) ? 404 : 500
+            res.status(status).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
     async getOrcamentosCliente(req: Request, res: Response) {
         try {
             const { id } = req.params

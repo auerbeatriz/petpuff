@@ -23,5 +23,6 @@ router.get('/orcamento/:id', (req, res) => orcamentoController.getOrcamento(req,
 router.delete('/orcamento/:id', (req, res) => orcamentoController.deleteOrcamento(req, res))
 router.put('/orcamento/:id', (req, res) => orcamentoController.responderOrcamento(req, res))
 router.put('/pelucia/:id', (req, res) => orcamentoController.atualizarPelucia(req, res))
+router.post('/orcamento/:id/reabrir', (req, res) => orcamentoController.reabrirOrcamento(req, res))
 
 export default router
