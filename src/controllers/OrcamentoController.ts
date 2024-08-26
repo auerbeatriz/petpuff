@@ -4,26 +4,31 @@ import { Schema } from "../types/schemas"
 import { BadRequestError } from "../types/erros/BadRequestError"
 import { ClienteRepository } from "../repositories/ClienteRepository"
 import { OrcamentoService } from "../services/OrcamentoService"
+import { PeluciaService } from "../services/PeluciaService"
 
 export class OrcamentoController {
 
-    private service
+    private orcamentoService
+    private peluciaService
 
     constructor() {
-        this.service = new OrcamentoService()
+        this.orcamentoService = new OrcamentoService()
+        this.peluciaService = new PeluciaService()
     }
 
     async create(req: Request, res: Response) {
         try {
             CommonHelper.validarInput(Schema.CRIAR_ORCAMENTO, req.body)
             const input = req.body
+            const clienteId = Number(input.clienteId)
 
-            const cliente = await ClienteRepository.get(Number(input.clienteId))
+            const cliente = await ClienteRepository.get(clienteId)
             if(!cliente) {
-                throw new BadRequestError(`Nenhum cliente associado ao id ${ input.clienteId }`)
+                throw new BadRequestError(`Nenhum cliente associado ao id ${ clienteId }`)
             }
-
-            const orcamento = await this.service.criar({...input, clienteId: Number(input.clienteId)})
+            
+            const pelucia = await this.peluciaService.criarPelucia(input)
+            const orcamento = await this.orcamentoService.criar(clienteId, pelucia)
             
             res.status(201).json({ numeroOrcamento: orcamento.id })
         } catch(error) {
@@ -40,7 +45,7 @@ export class OrcamentoController {
                 throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
             }
 
-            const orcamentos = await this.service.getOrcamentosCliente(Number(id))
+            const orcamentos = await this.orcamentoService.getOrcamentosCliente(Number(id))
             res.status(200).json(orcamentos)
         } catch(error) {
             const message = 'Não foi possível obter os orçamentos.'
@@ -57,7 +62,7 @@ export class OrcamentoController {
                 throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
             }
 
-            const orcamento = await this.service.getOrcamento(Number(id))
+            const orcamento = await this.orcamentoService.getOrcamento(Number(id))
 
             res.status(200).json(orcamento)
         } catch(error) {
@@ -101,13 +106,17 @@ export class OrcamentoController {
                 throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
             }
 
-            await this.service.responderOrcamento({...input, id: Number(id)})
+            await this.orcamentoService.responderOrcamento({...input, id: Number(id)})
             res.status(204).json()
         } catch(error) {
             const message = 'Não foi possível criar o orçamento.'
             const status = (error instanceof BadRequestError) ? 404 : 500
             res.status(status).json({ message, erro: (error as Error).message }) 
         }
+    }
+
+    async atualizarPelucia(req: Request, res: Response) {
+        // todo
     }
 
     async deleteOrcamento(req: Request, res: Response) {
@@ -118,7 +127,9 @@ export class OrcamentoController {
                 throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
             }
 
-            await this.service.delete(Number(id))
+            const {idPelucia, fotos } = await this.orcamentoService.delete(Number(id))
+            await this.peluciaService.delete(idPelucia, fotos)
+
             res.status(204).json()
         } catch(error) {
             const message = 'Não foi possível fazer a exclusão.'

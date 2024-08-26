@@ -20,11 +20,6 @@ export class PeluciaRepository {
     }
 
     static async delete(id: number) {
-        return await this.repository
-        .createQueryBuilder()
-        .delete()
-        .from(Pelucia)
-        .where(`id = ${id}`)
-        .execute()
+        return await this.repository.delete(id)
     }
 }

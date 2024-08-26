@@ -1,25 +1,18 @@
 import { Atendimento } from "../entities/Atendimento";
 import { KitMaterial } from "../entities/KitMaterial";
 import { Orcamento } from "../entities/Orcamento";
+import { Pelucia } from "../entities/Pelucia";
 import { Tamanho } from "../entities/Tamanho";
 import { AtendimentoRepository } from "../repositories/AtendimentoRepository";
 import { OrcamentoRepository } from "../repositories/OrcamentoRepository";
 import { ResponderOrcamentoPayload } from "../types/AtualizarOrcamentoPayload";
-import { CriarOrcamentoPayload } from "../types/CriarOrcamentoPayload";
 import { StatusOrcamento } from "../types/enums";
 import { BadRequestError } from "../types/erros/BadRequestError";
-import { PeluciaService } from "./PeluciaService";
 
 export class OrcamentoService {
-    private peluciaService
 
-    constructor(){
-        this.peluciaService = new PeluciaService()
-    }
-
-    async criar(input: CriarOrcamentoPayload): Promise<Orcamento> {
-        const pelucia = await this.peluciaService.criarPelucia(input)
-        const atendimento = await this.criarAtendimento(input.clienteId)
+    async criar(clienteId: number, pelucia: Pelucia): Promise<Orcamento> {
+        const atendimento = await this.criarAtendimento(clienteId)
         const orcamento = await OrcamentoRepository.create(atendimento, pelucia)
 
         return orcamento
@@ -140,11 +133,8 @@ export class OrcamentoService {
 
     }
 
-    async delete(orcamentoId: number): Promise<void> {
+    async delete(orcamentoId: number): Promise<{ idPelucia: number, fotos: number[] }> {
         const orcamento = await OrcamentoRepository.getOrcamentoMinimo(orcamentoId, StatusOrcamento.CANCELADO)
-
-        //await repository.remove(user)
-        //await repository.remove([category1, category2, category3])
 
         if(!orcamento) {
             throw new BadRequestError(`Orçamento de id: ${ orcamentoId } não existe ou não está cancelado.`)
@@ -153,7 +143,8 @@ export class OrcamentoService {
         const { id, fotos } = orcamento.pelucia
         const fotosId = fotos.map(({id}) => id)
 
-        await this.peluciaService.delete(id, fotosId)
         await OrcamentoRepository.deleteOrcamento(orcamentoId)
+
+        return { idPelucia: id, fotos: fotosId}
     }
 }

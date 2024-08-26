@@ -13,13 +13,6 @@ export class FotoPeluciaRepository {
     }
 
     static async deleteAll(ids: number[]) {
-        if (ids.length !== 0) {
-            return await this.repository
-            .createQueryBuilder()
-            .delete()
-            .from(FotoPelucia)
-            .where('id IN (:...ids)', { ids })
-            .execute()   
-        }
+        return await this.repository.delete(ids)
     }
 }
