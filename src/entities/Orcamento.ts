@@ -21,8 +21,8 @@ export class Orcamento {
     @Column({type: 'double precision', nullable: true})
     valor: number
 
-    @Column({type: 'date', name: 'prazo_confeccao', nullable: true})
-    prazoConfeccao: Date
+    @Column({type: 'integer', name: 'prazo_confeccao', nullable: true})
+    prazoConfeccao: number
 
     @Column({type: 'text', name: 'informacoes_adicionais', nullable: true})
     informacoesAdicionais: string

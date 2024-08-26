@@ -4,7 +4,9 @@ import { Orcamento } from "../entities/Orcamento";
 import { Tamanho } from "../entities/Tamanho";
 import { AtendimentoRepository } from "../repositories/AtendimentoRepository";
 import { OrcamentoRepository } from "../repositories/OrcamentoRepository";
+import { ResponderOrcamentoPayload } from "../types/AtualizarOrcamentoPayload";
 import { CriarOrcamentoPayload } from "../types/CriarOrcamentoPayload";
+import { StatusOrcamento } from "../types/enums";
 import { BadRequestError } from "../types/erros/BadRequestError";
 import { PeluciaService } from "./PeluciaService";
 
@@ -116,8 +118,33 @@ export class OrcamentoService {
         }
     }
 
+    async responderOrcamento(input: ResponderOrcamentoPayload): Promise<void> {
+        const statusOrcamento = (await OrcamentoRepository.getStatusOrcamento(input.id)).status
+
+        if(statusOrcamento === StatusOrcamento.NOVO) {
+            //todo: get idFuncionario associado ao Authorization
+            // todo: call PUT orcamento/:id/atendimento para colocar em análise
+            // todo: then proceed with the steps below
+        }
+
+        if ([StatusOrcamento.EM_ANALISE, StatusOrcamento.RESPONDIDO].includes(statusOrcamento)) {
+            if (statusOrcamento === StatusOrcamento.EM_ANALISE) {
+                input.updateDates = true
+            }
+        
+            await OrcamentoRepository.responderOrcamento(input);
+        }
+    }
+
+    async atenderOrcamento(): Promise<void> {
+
+    }
+
     async delete(orcamentoId: number): Promise<void> {
-        const orcamento = await OrcamentoRepository.getOrcamentoMinimo(orcamentoId)
+        const orcamento = await OrcamentoRepository.getOrcamentoMinimo(orcamentoId, StatusOrcamento.CANCELADO)
+
+        //await repository.remove(user)
+        //await repository.remove([category1, category2, category3])
 
         if(!orcamento) {
             throw new BadRequestError(`Orçamento de id: ${ orcamentoId } não existe ou não está cancelado.`)

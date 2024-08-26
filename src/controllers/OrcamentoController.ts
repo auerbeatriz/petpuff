@@ -67,6 +67,49 @@ export class OrcamentoController {
         }
     }
 
+    async atenderOrcamento(req: Request, res: Response) {
+        try {           
+            /*
+            const input = req.body
+            const { id } = req.params
+            
+            if(!id) {
+                throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
+            }
+
+            await this.service.responderOrcamento({...input, orcamentoId: Number(id)})
+            res.status(204).json()
+
+            */
+
+            // todo: add authorization for funcionarios
+        } catch(error) {
+            const message = 'Não foi possível atualizar o orçamento.'
+            const status = (error instanceof BadRequestError) ? 404 : 500
+            res.status(status).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
+    async responderOrcamento(req: Request, res: Response) {
+        try {
+            CommonHelper.validarInput(Schema.RESPONDER_ORCAMENTO, req.body)
+           
+            const input = req.body
+            const { id } = req.params
+            
+            if(!id) {
+                throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
+            }
+
+            await this.service.responderOrcamento({...input, id: Number(id)})
+            res.status(204).json()
+        } catch(error) {
+            const message = 'Não foi possível criar o orçamento.'
+            const status = (error instanceof BadRequestError) ? 404 : 500
+            res.status(status).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
     async deleteOrcamento(req: Request, res: Response) {
         try {
             const { id } = req.params

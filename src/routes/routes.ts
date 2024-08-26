@@ -20,7 +20,9 @@ router.post('/orcamento', (req, res) => orcamentoController.create(req, res))
 
 // Orcamento
 router.get('/orcamento/:id', (req, res) => orcamentoController.getOrcamento(req, res))
-router.delete('/orcamento/:id', (req, res) => orcamentoController.deleteOrcamento(req, res) )
+router.delete('/orcamento/:id', (req, res) => orcamentoController.deleteOrcamento(req, res))
+router.put('/orcamento/:id', (req, res) => orcamentoController.responderOrcamento(req, res))
+
 
 
 export default router

@@ -1,10 +1,11 @@
-import { DeleteResult } from "typeorm";
+import { DeleteResult, FindOptionsWhere } from "typeorm";
 import { DataBaseConnection } from "../config/typeorm";
 import { Atendimento } from "../entities/Atendimento";
 import { FotoPelucia } from "../entities/FotoPelucia";
 import { Orcamento } from "../entities/Orcamento";
 import { Pelucia } from "../entities/Pelucia";
 import { StatusOrcamento } from "../types/enums";
+import { AtualizarOrcamento, ResponderOrcamentoPayload } from "../types/AtualizarOrcamentoPayload";
 
 export class OrcamentoRepository {
     static repository = DataBaseConnection.getRepository(Orcamento)
@@ -108,13 +109,21 @@ export class OrcamentoRepository {
         return orcamento
     }
 
-    static async getOrcamentoMinimo(id: number): Promise<Orcamento> {
+    static async getStatusOrcamento(id: number): Promise<Orcamento> {
+        return (await this.repository.find({
+            where: { id },
+            select: { status: true }
+        }))[0]
+    }
+
+    static async getOrcamentoMinimo(id: number, status?: StatusOrcamento): Promise<Orcamento> {
         const [ orcamento ] = await this.repository.find({
             where: { 
                 id,
-                status: StatusOrcamento.CANCELADO
-             },
+                status
+            },
             select: {
+                status: true,
                 pelucia: {
                     id: true,
                     fotos: {
@@ -130,6 +139,35 @@ export class OrcamentoRepository {
         })
 
         return orcamento
+    }
+
+    static async responderOrcamento(input: ResponderOrcamentoPayload): Promise<void> {
+        const { id, valor, prazoConfeccao, informacoesAdicionais } = input
+
+        let updateClause: AtualizarOrcamento = {
+            valor,
+            prazoConfeccao,
+            informacoesAdicionais
+        }
+
+        if(input.updateDates) {
+            const today = new Date()
+            const dataExpiracao = new Date(today)
+            dataExpiracao.setDate(today.getDate() + 15)
+
+            updateClause = {...updateClause, 
+                dataRetorno: today,
+                dataExpiracao,
+                status: StatusOrcamento.RESPONDIDO
+            }
+        }
+
+        console.log(updateClause)
+        
+        await this.repository.update(
+            id, 
+            updateClause
+        )
     }
 
     static async deleteOrcamento(id: number): Promise<DeleteResult> {
