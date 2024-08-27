@@ -21,8 +21,14 @@ export class PeluciaRepository {
     }
 
     static async update(input: AtualizarPelucia) {
-        const { id, detalhes, tamanho, kitMaterial } = input
-        const pelucia = await this.repository.update(id, { detalhes, tamanho, kitMaterial })
+        const { id, detalhes, tamanho, kitMaterial, peso } = input
+        let pelucia
+
+        if(!peso) {
+            pelucia = await this.repository.update(id, { detalhes, tamanho, kitMaterial })
+        } else {
+            pelucia = await this.repository.update(id, { detalhes, tamanho, kitMaterial, peso })
+        }
 
         return pelucia
     }

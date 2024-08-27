@@ -24,12 +24,12 @@ export class PeluciaService {
     }
 
     async atualizar(id: number, input: AtualizarPeluciaPayload): Promise<void> {
-        const { detalhes } = input
+        const { detalhes, peso } = input
         
         const tamanho = await TamanhoRepository.create(input.tamanho)
         const [kitMaterial] = await KitMaterialRepository.get(input.kitMaterial)
 
-        await PeluciaRepository.update({ id, detalhes, tamanho, kitMaterial })
+        await PeluciaRepository.update({ id, detalhes, tamanho, kitMaterial, peso })
     }
 
     async delete(id: number, fotosId: number[]) {

@@ -26,6 +26,7 @@ export interface AtualizarPeluciaPayload {
     },
     kitMaterial: number
     detalhes: string
+    peso?: number
 }
 
 export interface AtualizarPelucia {
@@ -33,4 +34,5 @@ export interface AtualizarPelucia {
     tamanho: Tamanho
     kitMaterial: KitMaterial
     detalhes: string
+    peso?: number
 }

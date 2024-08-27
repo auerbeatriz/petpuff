@@ -21,6 +21,9 @@ export class Pelucia {
     @Column({type: 'varchar', nullable: true, name: 'mensagem_presente'})
     mensagemPresente: string
 
+    @Column({type: 'decimal', nullable: true})
+    peso: number
+
     @ManyToOne(() => KitMaterial)
     @JoinColumn({name: 'id_kit_material'})
     kitMaterial: KitMaterial
