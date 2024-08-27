@@ -4,6 +4,7 @@ import { TamanhoController } from '../controllers/TamanhoController';
 import { KitMaterialController } from '../controllers/KitMaterialController';
 import { OrcamentoController } from '../controllers/OrcamentoController';
 import { ClienteController } from '../controllers/ClienteController';
+import { PedidoController } from '../controllers/PedidoController';
 
 const router = Router();
 
@@ -26,5 +27,8 @@ router.delete('/orcamento/:id', (req, res) => orcamentoController.deleteOrcament
 router.put('/orcamento/:id', (req, res) => orcamentoController.responderOrcamento(req, res))
 router.put('/pelucia/:id', (req, res) => orcamentoController.atualizarPelucia(req, res))
 router.post('/orcamento/:id/reabrir', (req, res) => orcamentoController.reabrirOrcamento(req, res))
+
+// Pedidos
+router.get('/frete', (req, res) => new PedidoController().getMetodosEntrega(req, res))
 
 export default router
