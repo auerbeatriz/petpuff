@@ -161,12 +161,13 @@ export class OrcamentoRepository {
     }
 
     static async responderOrcamento(input: ResponderOrcamentoPayload): Promise<void> {
-        const { id, valor, prazoConfeccao, informacoesAdicionais } = input
+        const { id, valor, prazoConfeccao, informacoesAdicionais, peso } = input
 
         let updateClause: AtualizarOrcamento = {
             valor,
             prazoConfeccao,
-            informacoesAdicionais
+            informacoesAdicionais,
+            peso
         }
 
         if(input.updateDates) {
