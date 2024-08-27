@@ -3,6 +3,7 @@ import { SampleController } from '../controllers/sample-controller'
 import { TamanhoController } from '../controllers/TamanhoController';
 import { KitMaterialController } from '../controllers/KitMaterialController';
 import { OrcamentoController } from '../controllers/OrcamentoController';
+import { ClienteController } from '../controllers/ClienteController';
 
 const router = Router();
 
@@ -11,7 +12,8 @@ const orcamentoController = new OrcamentoController()
 router.get('/sample', SampleController)
 
 // Cliente
-router.get('/cliente/:id/orcamentos', (req, res) => orcamentoController.getOrcamentosCliente(req, res) )
+router.get('/cliente/:id/orcamentos', (req, res) => orcamentoController.getOrcamentosCliente(req, res))
+router.get('/cliente', (req, res) => new ClienteController().getCliente(req, res))
 
 // Personalizar pelucia
 router.get('/tamanhos', new TamanhoController().getTamanhos)
