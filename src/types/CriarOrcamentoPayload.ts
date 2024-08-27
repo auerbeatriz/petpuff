@@ -1,4 +1,5 @@
 import { KitMaterial } from "../entities/KitMaterial"
+import { Orcamento } from "../entities/Orcamento"
 import { Tamanho } from "../entities/Tamanho"
 
 export interface TamanhoInterface {
@@ -21,5 +22,6 @@ export interface CriarOrcamentoPayload {
     tamanho: TamanhoInterface
     kitMaterialId?: number
     detalhes?: string,
-    clienteId: number
+    clienteId: number,
+    idOrcamentoAnterior?: number
 }

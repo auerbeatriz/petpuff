@@ -10,7 +10,7 @@ import { AtualizarOrcamento, ResponderOrcamentoPayload } from "../types/Atualiza
 export class OrcamentoRepository {
     static repository = DataBaseConnection.getRepository(Orcamento)
 
-    static async create(atendimento: Atendimento, pelucia: Pelucia): Promise<Orcamento> {
+    static async create(atendimento: Atendimento, pelucia: Pelucia, idOrcamentoAnterior?: number): Promise<Orcamento> {
         const orcamento = this.repository.create({
             dataSolicitacao: new Date(),
             status: StatusOrcamento.NOVO,
@@ -19,6 +19,12 @@ export class OrcamentoRepository {
         })
 
         await this.repository.save(orcamento)
+
+        console.log(idOrcamentoAnterior)
+
+        if(idOrcamentoAnterior) {
+            await this.repository.update(orcamento.id, { orcamentoAnterior: { id: idOrcamentoAnterior } })
+        }
 
         return orcamento
     }
@@ -139,6 +145,19 @@ export class OrcamentoRepository {
         })
 
         return orcamento
+    }
+
+    static async getOrcamentoReaberto(idOrcamentoAnterior: number): Promise<Orcamento[]> {
+        const orcamentos = await this.repository.find({
+            where: { 
+                orcamentoAnterior: { id: idOrcamentoAnterior }
+            },
+            select: {
+                id: true
+            }
+        })
+
+        return orcamentos
     }
 
     static async responderOrcamento(input: ResponderOrcamentoPayload): Promise<void> {

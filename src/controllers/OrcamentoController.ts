@@ -48,7 +48,7 @@ export class OrcamentoController {
             const payload = await this.orcamentoService.reabrirOrcamento(Number(id))
 
             const pelucia = await this.peluciaService.criarPelucia(payload)
-            const orcamento = await this.orcamentoService.criar(payload.clienteId, pelucia)
+            const orcamento = await this.orcamentoService.criar(payload.clienteId, pelucia, payload.idOrcamentoAnterior)
 
             res.status(201).json({"id": orcamento.id})
         } catch(error) {

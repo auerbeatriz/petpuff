@@ -12,9 +12,9 @@ import { BadRequestError } from "../types/erros/BadRequestError";
 
 export class OrcamentoService {
 
-    async criar(clienteId: number, pelucia: Pelucia): Promise<Orcamento> {
+    async criar(clienteId: number, pelucia: Pelucia, idOrcamentoAnterior?: number): Promise<Orcamento> {
         const atendimento = await this.criarAtendimento(clienteId)
-        const orcamento = await OrcamentoRepository.create(atendimento, pelucia)
+        const orcamento = await OrcamentoRepository.create(atendimento, pelucia, idOrcamentoAnterior)
 
         return orcamento
     }
@@ -30,9 +30,13 @@ export class OrcamentoService {
 
     async reabrirOrcamento(idOrcamentoAnterior: number): Promise<CriarOrcamentoPayload> {
         const orcamentoAnterior = await OrcamentoRepository.getOrcamento(idOrcamentoAnterior)
-        
         if(![StatusOrcamento.EXPIRADO].includes(orcamentoAnterior.status)) {
             throw new BadRequestError('O orçamento não existe ou não pode ser reaberto (não expirado).')
+        }
+
+        const novosOrcamentos = await OrcamentoRepository.getOrcamentoReaberto(idOrcamentoAnterior)
+        if(novosOrcamentos) {
+            throw new BadRequestError('O orçamento já foi reaberto.')
         }
 
         return {
@@ -45,7 +49,8 @@ export class OrcamentoService {
                 id: orcamentoAnterior.pelucia.tamanho.id,
                 altura: orcamentoAnterior.pelucia.tamanho.altura
             },
-            kitMaterialId: orcamentoAnterior.pelucia.kitMaterial.id
+            kitMaterialId: orcamentoAnterior.pelucia.kitMaterial.id,
+            idOrcamentoAnterior
         }
     }
 
