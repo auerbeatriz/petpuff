@@ -28,5 +28,5 @@ export class Cliente {
 
     @OneToOne(() => Endereco)
     @JoinColumn({name: 'id_endereco'})
-    id_endereco: Endereco
+    endereco: Endereco
 }

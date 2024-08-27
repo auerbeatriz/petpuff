@@ -10,4 +10,7 @@ export class Login {
 
     @Column({ type: 'varchar', length: 255 })
     token: string
+
+    @Column({type: 'boolean'})
+    staff: boolean
 }
