@@ -6,6 +6,7 @@ import { Orcamento } from "../entities/Orcamento";
 import { Pelucia } from "../entities/Pelucia";
 import { StatusOrcamento } from "../types/enums";
 import { AtualizarOrcamento, ResponderOrcamentoPayload } from "../types/AtualizarOrcamentoPayload";
+import { NotFoundError } from "../types/erros/NotFoundError";
 
 export class OrcamentoRepository {
     static repository = DataBaseConnection.getRepository(Orcamento)
@@ -20,11 +21,33 @@ export class OrcamentoRepository {
 
         await this.repository.save(orcamento)
 
-        console.log(idOrcamentoAnterior)
-
         if(idOrcamentoAnterior) {
             await this.repository.update(orcamento.id, { orcamentoAnterior: { id: idOrcamentoAnterior } })
         }
+
+        return orcamento
+    }
+
+    static async getAtendimento(id: number): Promise<Orcamento> {
+        const orcamento = await this.repository.findOne({
+            select: {
+                id: true,
+                status: true,
+                atendimento: {
+                    id: true
+                }
+            },
+            relations: {
+                atendimento: true
+            },
+            where: { id }
+        })
+
+        if(!orcamento) {
+            throw new NotFoundError(`Nenhum orçamento encontrado para o id: {${id}}`)
+        }
+
+        console.log(orcamento)
 
         return orcamento
     }
@@ -186,6 +209,10 @@ export class OrcamentoRepository {
             id, 
             updateClause
         )
+    }
+
+    static async atualizarStatus(id:number, status: StatusOrcamento) {
+        await this.repository.update(id, { status })
     }
 
     static async deleteOrcamento(id: number): Promise<DeleteResult> {

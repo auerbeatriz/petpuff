@@ -3,6 +3,9 @@ import { MetodoEntregaService } from "../services/MetodoEntregaService";
 import { CommonHelper } from "../helpers/helper";
 import { Schema } from "../types/schemas";
 import { FecharPedidoService } from "../services/FecharPedidoService";
+import { AndamentoPedidoService } from "../services/AndamentoPedidoService";
+import { BadRequestError } from "../types/erros/BadRequestError";
+import { AndamentoEntregaService } from "../services/AndamentoEntregaService";
 
 export class PedidoController {
     async getMetodosEntrega(req: Request, res: Response) {
@@ -16,7 +19,8 @@ export class PedidoController {
             res.status(200).json(metodosEntrega)
         } catch(error) {
             const message = 'Não foi possível obter métodos de entrega.'
-            res.status(500).json({ message, erro: (error as Error).message }) 
+            const statusCode = (error instanceof BadRequestError) ? 404 : 500 
+            res.status(statusCode).json({ message, erro: (error as Error).message }) 
         }
     }
 
@@ -25,13 +29,54 @@ export class PedidoController {
             CommonHelper.validarInput(Schema.FECHAR_PEDIDO, req.body)
             const input = req.body
 
+            if(!input.cliente.id) {
+                throw new BadRequestError('Nenhum cliente associado.')
+            }
+
+            if(!input.orcamento) {
+                throw new BadRequestError('Nenhum orçamento associado.')
+            }
+
             const service = new FecharPedidoService()
             const idPedido = await service.execute(input)
 
             res.status(200).json({ id: idPedido })
         } catch(error) {
             const message = 'Não foi possível criar o pedido.'
-            res.status(500).json({ message, erro: (error as Error).message }) 
+            const statusCode = (error instanceof BadRequestError) ? 404 : 500 
+            res.status(statusCode).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
+    async atualizarProducao(req: Request, res: Response) {
+        try {
+            CommonHelper.validarInput(Schema.ANDAMENTO_PEDIDO, req.body)
+            const input = req.body
+
+            const service = new AndamentoPedidoService()
+            await service.atualizarPedido(input.status, input.id)
+
+            res.status(201).json()
+        } catch(error) {
+            const message = 'Não foi possível atualizar o andamento da produção do pedido.'
+            const statusCode = (error instanceof BadRequestError) ? 404 : 500 
+            res.status(statusCode).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
+    async atualizarEntrega(req: Request, res: Response) {
+        try {
+            CommonHelper.validarInput(Schema.ANDAMENTO_PEDIDO, req.body)
+            const input = req.body
+
+            const service = new AndamentoEntregaService()
+            await service.atualizarPedido(input.status, input.id)
+
+            res.status(201).json()
+        } catch(error) {
+            const message = 'Não foi possível atualizar o andamento da entrega do pedido.'
+            const statusCode = (error instanceof BadRequestError) ? 404 : 500 
+            res.status(statusCode).json({ message, erro: (error as Error).message }) 
         }
     }
 }

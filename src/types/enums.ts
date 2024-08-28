@@ -23,6 +23,13 @@ export enum MetodoEntrega {
     RETIRADA = 'RETIRADA EM LOJA'
 }
 
+export enum EtapaPedido {
+    ORDEM_EMITIDA = 'ORDEM DE PRODUÇÃO EMITIDA',
+    COLETA_MATERIAIS = 'COLETA DE MATERIAIS',
+    EM_PRODUCAO = 'EM PRODUÇÃO',
+    PRODUZIDO = 'CONFECÇÃO CONCLUÍDA'
+}
+
 export enum EtapaEntrega {
     EM_SEPARACAO = 'EM SEPARAÇÃO',
     ENVIADO_TRANSPORTADORA = 'ENVIADO PARA A TRANSPORTADORA',
@@ -31,6 +38,7 @@ export enum EtapaEntrega {
     AGUARDANDO_RETIRADA = 'AGUARDANDO RETIRADA',
     ENTREGUE = 'ENTREGUE'
 }
+
 
 export enum Setor {
     VENDAS = 'VENDAS',

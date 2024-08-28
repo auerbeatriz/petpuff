@@ -20,4 +20,8 @@ export class AtendimentoRepository {
 
         return atendimento
     }
+
+    static async atualizar(id: number, idFuncionario: number) {
+        await this.repository.update(id, { funcionario: { id: idFuncionario }})
+    }
 }

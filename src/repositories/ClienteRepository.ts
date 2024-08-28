@@ -1,6 +1,9 @@
 import { DataBaseConnection } from "../config/typeorm";
 import { Cliente } from "../entities/Cliente";
+import { CheckoutCliente } from "../types/Checkout.interface";
+import { BadRequestError } from "../types/erros/BadRequestError";
 import { NotFoundError } from "../types/erros/NotFoundError";
+import { EnderecoRepository } from "./EnderecoRepository";
 
 export class ClienteRepository {
     static repository = DataBaseConnection.getRepository(Cliente)
@@ -32,5 +35,21 @@ export class ClienteRepository {
         }
 
         return cliente
+    }
+
+    static async atualizarEndereco(cliente: CheckoutCliente) {
+        const { id, enderecoFiscal, cpf } = cliente
+        const clienteBD = await this.get(id)
+
+        if(clienteBD.cpf === cpf) {
+            if(!enderecoFiscal) {
+                throw new BadRequestError('Nenhum endereço fiscal encontrado.')
+            }
+
+            const endereco = await EnderecoRepository.criar(enderecoFiscal)
+            await this.repository.update(id, {
+                endereco
+            })
+        }
     }
 }

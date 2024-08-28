@@ -1,7 +1,9 @@
 import { DataBaseConnection } from "../config/typeorm";
 import { Pelucia } from "../entities/Pelucia";
 import { AtualizarPelucia } from "../types/AtualizarOrcamentoPayload";
+import { CheckoutPelucia } from "../types/Checkout.interface";
 import { PeluciaInterface } from "../types/CriarOrcamentoPayload";
+import { BadRequestError } from "../types/erros/BadRequestError";
 
 export class PeluciaRepository {
     static repository = DataBaseConnection.getRepository(Pelucia)
@@ -31,6 +33,19 @@ export class PeluciaRepository {
         }
 
         return pelucia
+    }
+
+    static async atualizarMensagem(pelucia: CheckoutPelucia) {
+        const { id, nomePresenteado, mensagemPresente } = pelucia
+
+        if(!id) {
+            throw new BadRequestError('Nenhuma pelúcia encontrada.')
+        }
+
+        await this.repository.update(id, {
+            nomePresenteado,
+            mensagemPresente
+        })
     }
 
     static async delete(id: number) {
