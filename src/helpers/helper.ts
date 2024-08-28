@@ -24,4 +24,33 @@ export class CommonHelper {
             }
         ]
     }
+
+    /** The following code was generated with ChatGPT */
+    static addBusinessDays(date: Date, days: number): Date {
+        let result = new Date(date)
+        let addedDays = 0
+      
+        while (addedDays < days) {
+          result.setDate(result.getDate() + 1)
+
+          if (this.isWeekday(result)) {
+            addedDays++
+          }
+        }
+      
+        return result
+    }
+
+    static isWeekday(date: Date): boolean {
+        const day = date.getDay()
+
+        // 0 = Domingo, 6 = Sábado
+        return day !== 0 && day !== 6 
+    }
+      
+    static addDays(date: Date, days: number): Date {
+        const result = new Date(date)
+        result.setDate(result.getDate() + days)
+        return result
+    }
 }

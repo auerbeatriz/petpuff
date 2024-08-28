@@ -2,7 +2,7 @@ import { CommonHelper } from "../helpers/helper";
 import { DimensaoPacoteEnvio, Frete, GetMetodoEntregaPayload, MetodoEntrega } from "../types/Checkout.interface";
 import { BadRequestError } from "../types/erros/BadRequestError";
 
-export class PedidoService {
+export class MetodoEntregaService {
     async getMetodosEntrega(input: GetMetodoEntregaPayload) {
         const url = 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate'
         const cep = Number(input.cep)
