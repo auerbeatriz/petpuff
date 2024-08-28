@@ -3,7 +3,7 @@ import { ClienteRepository } from '../repositories/ClienteRepository';
 import { Login } from '../entities/Login';
 
 export class ClienteController {
-    // Método para criar um novo cliente
+
     static async create(req: Request, res: Response) {
         try {
             const { email, nome, sobrenome, cpf, celular } = req.body;
@@ -17,7 +17,6 @@ export class ClienteController {
         }
     }
 
-    // Método para obter informações de um cliente
     static async getCliente(req: Request, res: Response) {
         try {
             const { id } = req.params;

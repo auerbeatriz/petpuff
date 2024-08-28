@@ -34,7 +34,6 @@ router.post('/orcamento/:id/reabrir', (req, res) => orcamentoController.reabrirO
 router.get('/frete', (req, res) => new PedidoController().getMetodosEntrega(req, res))
 router.post('/pedido', (req, res) => new PedidoController().fecharPedido(req, res))
 
-
 // Usuario
 router.post('/login', (req, res) => AuthController.login(req, res));
 router.post('/register', (req, res) => AuthController.register(req, res));

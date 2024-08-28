@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AuthService } from '../services/AuthService';
 
 export class AuthController {
-    // Método para registrar um novo usuário (cliente ou funcionário)
+    
     static async register(req: Request, res: Response) {
         try {
             const {password, email, nome, sobrenome, cpf, celular } = req.body;
@@ -12,11 +12,14 @@ export class AuthController {
 
             return res.status(201).json({ message: 'Usuário registrado com sucesso', login });
         } catch (error) {
-            return res.status(400).json({ message: "Erro" });
+            if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+            } else {
+                return res.status(500).json({ message: 'Erro desconhecido' });
+            }
         }
     }
 
-    // Método para autenticar um usuário
     static async login(req: Request, res: Response) {
         try {
             const { username, password } = req.body;

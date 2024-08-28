@@ -5,13 +5,15 @@ import { FuncionarioRepository } from '../repositories/FuncionarioRepository';
 import { Login } from '../entities/Login';
 
 export class AuthService {
-    // Constantes para PBKDF2
-    private static readonly TOKEN_FIXO = 'fixed_token_value'; // Token fixo para todas as operações de codificação/decodificação
+    static findUserByUsername(email: any) {
+        throw new Error('Method not implemented.');
+    }
+
+    private static readonly TOKEN_FIXO = 'U29tZVRva2VuU3RyaW5n'; 
     private static readonly ITERATIONS = 10000;
     private static readonly KEY_LENGTH = 64;
     private static readonly DIGEST = 'sha512';
 
-    // Função para codificar a senha usando PBKDF2 com um token fixo
     static async hashPassword(password: string): Promise<string> {
         return new Promise((resolve, reject) => {
             crypto.pbkdf2(password, this.TOKEN_FIXO, this.ITERATIONS, this.KEY_LENGTH, this.DIGEST, (err, derivedKey) => {
@@ -21,15 +23,13 @@ export class AuthService {
         });
     }
 
-    // Função para verificar se a senha fornecida corresponde ao hash armazenado
     static async verifyPassword(storedPassword: string, providedPassword: string): Promise<boolean> {
         const hashedProvidedPassword = await this.hashPassword(providedPassword);
         return storedPassword === hashedProvidedPassword;
     }
 
-    // Função para registrar um novo usuário (cliente ou funcionário)
     static async register(
-        
+
         password: string,
         userDetails: { email: string, nome: string, sobrenome: string, cpf: string, celular: string }): Promise<Login> {
         const existingLogin = await LoginRepository.findByUsername(userDetails.email);
@@ -52,7 +52,6 @@ export class AuthService {
         return login;
     }
 
-    // Função para autenticar um usuário
     static async login(username: string, password: string): Promise<Login> {
         const login = await LoginRepository.findByUsername(username);
         if (!login) {

@@ -7,20 +7,17 @@ export class LoginRepository extends Repository<Login> {
         super(Login, DataBaseConnection.manager);
     }
 
-    // Cria e salva um novo Login
     static async createLogin(username: string, password: string): Promise<Login> {
         const repository = DataBaseConnection.getRepository(Login);
         const login = repository.create({ username, password });
         return repository.save(login);
     }
 
-    // Encontra um login pelo nome de usuário
     static async findByUsername(username: string): Promise<Login | null> {
         const repository = DataBaseConnection.getRepository(Login);
         return repository.findOneBy({ username });
     }
 
-    // Encontra todos os logins relacionados a clientes
     static async findAllClients(): Promise<Login[]> {
         const repository = DataBaseConnection.getRepository(Login);
         return repository.createQueryBuilder('login')
@@ -29,7 +26,6 @@ export class LoginRepository extends Repository<Login> {
             .getMany();
     }
 
-    // Encontra todos os logins relacionados a funcionários
     static async findAllFuncionarios(): Promise<Login[]> {
         const repository = DataBaseConnection.getRepository(Login);
         return repository.createQueryBuilder('login')
