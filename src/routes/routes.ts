@@ -3,6 +3,8 @@ import { SampleController } from '../controllers/sample-controller'
 import { TamanhoController } from '../controllers/TamanhoController';
 import { KitMaterialController } from '../controllers/KitMaterialController';
 import { OrcamentoController } from '../controllers/OrcamentoController';
+import { ClienteController } from '../controllers/ClienteController';
+import { PedidoController } from '../controllers/PedidoController';
 import { AutenticarController } from '../controllers/AutenticarController';
 
 const router = Router();
@@ -13,7 +15,8 @@ const autenticarController = new AutenticarController();
 router.get('/sample', SampleController)
 
 // Cliente
-router.get('/cliente/:id/orcamentos', (req, res) => orcamentoController.getOrcamentosCliente(req, res) )
+router.get('/cliente/:id/orcamentos', (req, res) => orcamentoController.getOrcamentosCliente(req, res))
+router.get('/cliente', (req, res) => new ClienteController().getCliente(req, res))
 
 // Personalizar pelucia
 router.get('/tamanhos', new TamanhoController().getTamanhos)
@@ -26,6 +29,9 @@ router.delete('/orcamento/:id', (req, res) => orcamentoController.deleteOrcament
 router.put('/orcamento/:id', (req, res) => orcamentoController.responderOrcamento(req, res))
 router.put('/pelucia/:id', (req, res) => orcamentoController.atualizarPelucia(req, res))
 router.post('/orcamento/:id/reabrir', (req, res) => orcamentoController.reabrirOrcamento(req, res))
+
+// Pedidos
+router.get('/frete', (req, res) => new PedidoController().getMetodosEntrega(req, res))
 
 // Usuario
 router.post('/login', (req, res) => autenticarController.login(req, res));

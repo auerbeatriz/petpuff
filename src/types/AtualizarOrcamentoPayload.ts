@@ -8,6 +8,7 @@ export interface ResponderOrcamentoPayload {
     prazoConfeccao: number
     informacoesAdicionais?: string
     updateDates?: boolean
+    peso?: number
 }
 
 export interface AtualizarOrcamento {
@@ -17,6 +18,7 @@ export interface AtualizarOrcamento {
     dataRetorno?: Date
     dataExpiracao?: Date
     status?: StatusOrcamento
+    peso?: number
 }
 
 export interface AtualizarPeluciaPayload {
