@@ -3,6 +3,7 @@ import { Entrega } from './Entrega';
 import { Pagamento } from './Pagamento';
 import { Devolucao } from './Devolucao';
 import { Orcamento } from './Orcamento';
+import { AndamentoPedido } from './AndamentoPedido';
 
 @Entity('pedido')
 export class Pedido {
@@ -26,4 +27,7 @@ export class Pedido {
 
     @OneToOne(() => Devolucao, devolucao => devolucao.pedido)
     devolucao: Devolucao
+
+    @OneToMany(() => AndamentoPedido, andamentoPedido => andamentoPedido.pedido)
+    andamentoPedido: AndamentoPedido[];
 }

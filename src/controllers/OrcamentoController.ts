@@ -93,21 +93,21 @@ export class OrcamentoController {
     }
 
     async atenderOrcamento(req: Request, res: Response) {
-        try {           
-            /*
-            const input = req.body
+        try {
+            // todo: add authorization for funcionarios
+            const { idFuncionario } = req.body
             const { id } = req.params
-            
+
             if(!id) {
-                throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
+                throw new BadRequestError(`id inválido: ${id}`)
             }
 
-            await this.service.responderOrcamento({...input, orcamentoId: Number(id)})
+            if(!idFuncionario) {
+                throw new BadRequestError(`id inválido: ${id}`)
+            }
+            
+            await this.orcamentoService.atenderOrcamento(Number(id), Number(idFuncionario))
             res.status(204).json()
-
-            */
-
-            // todo: add authorization for funcionarios
         } catch(error) {
             const message = 'Não foi possível atualizar o orçamento.'
             const status = (error instanceof BadRequestError) ? 404 : 500

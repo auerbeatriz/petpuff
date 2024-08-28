@@ -1,12 +1,17 @@
 import { DataBaseConnection } from "../config/typeorm";
+import { AndamentoEntrega } from "../entities/AndamentoEntrega";
 import { Endereco } from "../entities/Endereco";
 import { Entrega } from "../entities/Entrega";
 import { CommonHelper } from "../helpers/helper";
 import { CriarEntregaInterface, Frete } from "../types/Checkout.interface";
-import { MetodoEntrega } from "../types/enums";
+import { EtapaEntrega, MetodoEntrega } from "../types/enums";
 
 export class EntregaRepository {
     static repository = DataBaseConnection.getRepository(Entrega)
+
+    static async get(id: number) {
+        return await this.repository.findOneByOrFail({ id })
+    }
 
     static async criar(input: CriarEntregaInterface): Promise<Entrega> {
         const { frete, prazoConfeccao, enderecoEntrega, pedido } = input
@@ -35,5 +40,17 @@ export class EntregaRepository {
         const previsaoEntrega = CommonHelper.addDays(previsaoConfeccao, prazoEntrega)
 
         return previsaoEntrega
+    }
+
+    static async atualizarAndamento(entrega: Entrega, status: string) {
+        const andamentoEntregaRepository = DataBaseConnection.getRepository(AndamentoEntrega)
+
+        const response = andamentoEntregaRepository.create({
+            dataHoraMudanca: new Date(),
+            etapaAtual: EtapaEntrega[status as keyof typeof EtapaEntrega],
+            entrega
+        })
+
+        await andamentoEntregaRepository.save(response)
     }
 }

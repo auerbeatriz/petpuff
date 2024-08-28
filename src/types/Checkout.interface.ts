@@ -41,13 +41,28 @@ export interface MetodoEntrega {
 }
 
 export interface FecharPedidoPayload {
-    valorPelucia: number
+    orcamento: number
+    pelucia: CheckoutPelucia
+    cliente: CheckoutCliente
     entrega: {
         frete: MetodoEntrega
         endereco: Endereco
     }
     pagamento: Pagamento
     prazoConfeccao: number
+}
+
+export interface CheckoutPelucia {
+    id: number
+    valorPelucia: number
+    nomePresenteado: string
+    mensagemPresente: string
+}
+
+export interface CheckoutCliente {
+    id: number
+    cpf: string
+    enderecoFiscal: Endereco
 }
 
 export interface Pagamento {

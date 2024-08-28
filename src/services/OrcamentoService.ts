@@ -163,8 +163,13 @@ export class OrcamentoService {
         }
     }
 
-    async atenderOrcamento(): Promise<void> {
+    async atenderOrcamento(idOrcamento: number, idFuncionario: number): Promise<void> {
+        const orcamento = await OrcamentoRepository.getAtendimento(idOrcamento)
+        await AtendimentoRepository.atualizar(orcamento.atendimento.id, idFuncionario)
 
+        if([StatusOrcamento.NOVO].includes(orcamento.status)) {
+            await OrcamentoRepository.atualizarStatus(idOrcamento, StatusOrcamento.EM_ANALISE)
+        }
     }
 
     async delete(orcamentoId: number): Promise<{ idPelucia: number, fotos: number[] }> {
