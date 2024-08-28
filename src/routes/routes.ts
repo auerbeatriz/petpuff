@@ -3,10 +3,12 @@ import { SampleController } from '../controllers/sample-controller'
 import { TamanhoController } from '../controllers/TamanhoController';
 import { KitMaterialController } from '../controllers/KitMaterialController';
 import { OrcamentoController } from '../controllers/OrcamentoController';
+import { AutenticarController } from '../controllers/AutenticarController';
 
 const router = Router();
 
 const orcamentoController = new OrcamentoController()
+const autenticarController = new AutenticarController();
 
 router.get('/sample', SampleController)
 
@@ -24,5 +26,9 @@ router.delete('/orcamento/:id', (req, res) => orcamentoController.deleteOrcament
 router.put('/orcamento/:id', (req, res) => orcamentoController.responderOrcamento(req, res))
 router.put('/pelucia/:id', (req, res) => orcamentoController.atualizarPelucia(req, res))
 router.post('/orcamento/:id/reabrir', (req, res) => orcamentoController.reabrirOrcamento(req, res))
+
+// Usuario
+router.post('/login', (req, res) => autenticarController.login(req, res));
+router.post('/register', (req, res) => autenticarController.register(req, res));
 
 export default router
