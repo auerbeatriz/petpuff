@@ -6,23 +6,22 @@ import { PagamentoRepository } from "../repositories/PagamentoRepository";
 import { PedidoRepository } from "../repositories/PedidoRepository";
 import { PeluciaRepository } from "../repositories/PeluciaRepository";
 import { FecharPedidoPayload } from "../types/Checkout.interface";
-import { StatusOrcamento } from "../types/enums";
 
 export class FecharPedidoService {
     async execute(input: FecharPedidoPayload): Promise<string> {
         const { pelucia, cliente, entrega: { frete, endereco }, pagamento, prazoConfeccao, orcamento } = input
 
         const valorTotalPedido = pelucia.valorPelucia + frete.valor
-        const pedido = await PedidoRepository.criar(valorTotalPedido)
+        const pedido = await PedidoRepository.criar(valorTotalPedido, Number(cliente.id))
 
         await ClienteRepository.atualizarEndereco(cliente)
-        await PagamentoRepository.criar(pagamento, pedido)
         await PeluciaRepository.atualizarMensagem(pelucia)
+        await OrcamentoRepository.aceitar(orcamento, pedido)
+
+        await PagamentoRepository.criar(pagamento, pedido)
 
         const enderecoEntrega = await EnderecoRepository.criar(endereco)
         await EntregaRepository.criar({ frete, enderecoEntrega, prazoConfeccao, pedido })
-
-        await OrcamentoRepository.atualizarStatus(orcamento, StatusOrcamento.ACEITO)
 
         return pedido.id.toString()
     }

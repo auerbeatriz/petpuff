@@ -6,8 +6,44 @@ import { FecharPedidoService } from "../services/FecharPedidoService";
 import { AndamentoPedidoService } from "../services/AndamentoPedidoService";
 import { BadRequestError } from "../types/erros/BadRequestError";
 import { AndamentoEntregaService } from "../services/AndamentoEntregaService";
+import { PedidoService } from "../services/PedidoService";
 
 export class PedidoController {
+
+    async getPedidos(req: Request, res: Response) {
+        try {
+            const clienteId = req.body
+
+            if(!clienteId) {
+                throw new BadRequestError(`Parâmetro inválido; clienteId: ${ clienteId }`)
+            }
+
+            //const pedidos = await new PedidoService().getPedidos(Number(clienteId))
+            res.status(200).json()
+        } catch(error) {
+            const message = 'Não foi possível obter os pedidos.'
+            const statusCode = (error instanceof BadRequestError) ? 404 : 500 
+            res.status(statusCode).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
+    async getPedido(req: Request, res: Response) {
+        try {
+            const id = req.params
+
+            if(!id) {
+                throw new BadRequestError(`Parâmetro inválido; id: ${ id }`)
+            }
+
+            /*const pedido = await new PedidoService().getOrcamento(Number(id))*/
+            res.status(200).json()
+        } catch(error) {
+            const message = 'Não foi possível obter os pedidos.'
+            const statusCode = (error instanceof BadRequestError) ? 404 : 500 
+            res.status(statusCode).json({ message, erro: (error as Error).message }) 
+        }
+    }
+
     async getMetodosEntrega(req: Request, res: Response) {
         try {
             CommonHelper.validarInput(Schema.GET_METODOS_ENTREGA, req.body)

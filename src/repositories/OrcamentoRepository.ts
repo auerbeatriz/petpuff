@@ -7,6 +7,7 @@ import { Pelucia } from "../entities/Pelucia";
 import { StatusOrcamento } from "../types/enums";
 import { AtualizarOrcamento, ResponderOrcamentoPayload } from "../types/AtualizarOrcamentoPayload";
 import { NotFoundError } from "../types/erros/NotFoundError";
+import { Pedido } from "../entities/Pedido";
 
 export class OrcamentoRepository {
     static repository = DataBaseConnection.getRepository(Orcamento)
@@ -26,6 +27,23 @@ export class OrcamentoRepository {
         }
 
         return orcamento
+    }
+
+    static async getOrcamentoByPedido(pedidoId: number) {
+        return await this.repository.findOne({
+            select: {
+                pelucia: {
+                    nome: true,
+                    fotos: true
+                }
+            },
+            relations: {
+                pelucia: true
+            },
+            where: {
+                pedido: { id: pedidoId }
+            }
+        })
     }
 
     static async getAtendimento(id: number): Promise<Orcamento> {
@@ -50,6 +68,13 @@ export class OrcamentoRepository {
         console.log(orcamento)
 
         return orcamento
+    }
+
+    static async aceitar(id: number, pedido: Pedido) {
+        await this.repository.update(id, {
+            pedido,
+            status: StatusOrcamento.ACEITO
+        })
     }
 
     static async getOrcamentosCliente(clienteId: number): Promise<Orcamento[]> {

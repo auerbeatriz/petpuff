@@ -2,14 +2,19 @@ import { DataBaseConnection } from "../config/typeorm";
 import { AndamentoPedido } from "../entities/AndamentoPedido";
 import { Pedido } from "../entities/Pedido";
 import { EtapaPedido } from "../types/enums";
+import { ClienteRepository } from "./ClienteRepository";
+import { OrcamentoRepository } from "./OrcamentoRepository";
 
 export class PedidoRepository {
     static repository = DataBaseConnection.getRepository(Pedido)
 
-    static async criar(valorTotal: number): Promise<Pedido> {
+    static async criar(valorTotal: number, clienteId: number): Promise<Pedido> {
         const response = this.repository.create({
             dataRealizacao: new Date(),
-            valorTotal
+            valorTotal,
+            cliente: {
+                id: clienteId
+            }
         })
 
         await this.repository.save(response)

@@ -5,12 +5,12 @@ export class Login {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     login: string
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     token: string
 
-    @Column({type: 'boolean'})
+    @Column({type: 'boolean', nullable: true})
     staff: boolean
 }

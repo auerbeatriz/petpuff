@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
 import { Entrega } from './Entrega';
 import { Pagamento } from './Pagamento';
 import { Devolucao } from './Devolucao';
 import { Orcamento } from './Orcamento';
 import { AndamentoPedido } from './AndamentoPedido';
+import { Cliente } from './Cliente';
 
 @Entity('pedido')
 export class Pedido {
@@ -30,4 +31,8 @@ export class Pedido {
 
     @OneToMany(() => AndamentoPedido, andamentoPedido => andamentoPedido.pedido)
     andamentoPedido: AndamentoPedido[];
+
+    @ManyToOne(() => Cliente, cliente => cliente.pedidos)
+    @JoinColumn({name: 'id_cliente'})
+    cliente: Cliente
 }
