@@ -6,7 +6,7 @@ import { Login } from './Login'
 export class Cliente {
     @PrimaryGeneratedColumn()
     id: number
-
+    
     @Column({type: 'varchar', nullable: true})
     nome: string
 

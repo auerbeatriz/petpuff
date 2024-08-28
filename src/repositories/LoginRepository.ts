@@ -1,28 +1,40 @@
-import { Repository } from "typeorm";
-import { DataBaseConnection } from "../config/typeorm";
-import { Login } from "../entities/Login";
-import { Cliente } from "../types/Users";
+import { Repository } from 'typeorm';
+import { DataBaseConnection } from '../config/typeorm';
+import { Login } from '../entities/Login';
 
-export class UserRepository {
-    static repository = DataBaseConnection.getRepository(Login)
-
-    static async findByLogin(login:string) {
-        return await this.repository.findOne({where:{ login }});
+export class LoginRepository extends Repository<Login> {
+    constructor() {
+        super(Login, DataBaseConnection.manager);
     }
 
-    static async create(input: Cliente){
-        let [ cliente ] = await this.repository.get({ login: input.login, senha: input.senha, nome: input.nome, sobrenome: input.sobrenome, cpf: input.cpf, celular: input.celular})
-        
-            if(!cliente){
-                cliente = this.repository.create({
-                login: input.login, 
-                senha: input.senha, 
-                nome: input.nome,  
-                sobrenome: input.sobrenome, 
-                cpf: input.cpf, 
-                celular: input.celular, 
-                })
-                await this.repository.save(cliente)
-        }
+    // Cria e salva um novo Login
+    static async createLogin(username: string, password: string): Promise<Login> {
+        const repository = DataBaseConnection.getRepository(Login);
+        const login = repository.create({ username, password });
+        return repository.save(login);
+    }
+
+    // Encontra um login pelo nome de usuário
+    static async findByUsername(username: string): Promise<Login | null> {
+        const repository = DataBaseConnection.getRepository(Login);
+        return repository.findOneBy({ username });
+    }
+
+    // Encontra todos os logins relacionados a clientes
+    static async findAllClients(): Promise<Login[]> {
+        const repository = DataBaseConnection.getRepository(Login);
+        return repository.createQueryBuilder('login')
+            .leftJoinAndSelect('login.cliente', 'cliente')
+            .where('cliente.id IS NOT NULL')
+            .getMany();
+    }
+
+    // Encontra todos os logins relacionados a funcionários
+    static async findAllFuncionarios(): Promise<Login[]> {
+        const repository = DataBaseConnection.getRepository(Login);
+        return repository.createQueryBuilder('login')
+            .leftJoinAndSelect('login.funcionario', 'funcionario')
+            .where('funcionario.id IS NOT NULL')
+            .getMany();
     }
 }

@@ -22,7 +22,7 @@ export class OrcamentoController {
             const input = req.body
             const clienteId = Number(input.clienteId)
 
-            const cliente = await ClienteRepository.get(clienteId)
+            const cliente = await ClienteRepository.findById(clienteId)
             if(!cliente) {
                 throw new BadRequestError(`Nenhum cliente associado ao id ${ clienteId }`)
             }

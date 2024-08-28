@@ -5,18 +5,18 @@ import { KitMaterialController } from '../controllers/KitMaterialController';
 import { OrcamentoController } from '../controllers/OrcamentoController';
 import { ClienteController } from '../controllers/ClienteController';
 import { PedidoController } from '../controllers/PedidoController';
-import { AutenticarController } from '../controllers/AutenticarController';
+import { AuthController } from '../controllers/AutenticarController';
+import auth from 'basic-auth';
 
 const router = Router();
 
 const orcamentoController = new OrcamentoController()
-const autenticarController = new AutenticarController();
 
 router.get('/sample', SampleController)
 
 // Cliente
 router.get('/cliente/:id/orcamentos', (req, res) => orcamentoController.getOrcamentosCliente(req, res))
-router.get('/cliente', (req, res) => new ClienteController().getCliente(req, res))
+router.get('/cliente', (req, res) => ClienteController.getCliente(req, res))
 
 // Personalizar pelucia
 router.get('/tamanhos', new TamanhoController().getTamanhos)
@@ -36,7 +36,7 @@ router.post('/pedido', (req, res) => new PedidoController().fecharPedido(req, re
 
 
 // Usuario
-router.post('/login', (req, res) => autenticarController.login(req, res));
-router.post('/register', (req, res) => autenticarController.register(req, res));
+router.post('/login', (req, res) => AuthController.login(req, res));
+router.post('/register', (req, res) => AuthController.register(req, res));
 
 export default router
