@@ -17,7 +17,8 @@ export enum MetodoPagamento {
 export enum MetodoEntrega {
     PAC = 'CORREIOS - PAC',
     SEDEX = 'CORREIOS - SEDEX',
-    TRANSPORTADORA = 'TRANSPORTADORA',
+    MINI_ENVIO = 'CORREIOS - MINI ENVIO',
+    JADLOG = 'JADLOG',
     ENTREGA_LOCAL = 'ENTREGA LOCAL',
     RETIRADA = 'RETIRADA EM LOJA'
 }

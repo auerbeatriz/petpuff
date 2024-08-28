@@ -1,5 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Bairro } from './Bairro';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('endereco')
 export class Endereco {
@@ -17,8 +16,4 @@ export class Endereco {
 
     @Column({ type: 'char', length: 8 })
     cep: string
-
-    @ManyToOne(() => Bairro)
-    @JoinColumn({ name: 'id_bairro' })
-    bairro: Bairro
 }
