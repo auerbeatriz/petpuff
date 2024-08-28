@@ -115,6 +115,7 @@ export class OrcamentoController {
         }
     }
 
+    //funcionario
     async responderOrcamento(req: Request, res: Response) {
         try {
             CommonHelper.validarInput(Schema.RESPONDER_ORCAMENTO, req.body)
@@ -135,6 +136,7 @@ export class OrcamentoController {
         }
     }
 
+    //funcionario
     async atualizarPelucia(req: Request, res: Response) {
         try {
             CommonHelper.validarInput(Schema.ATUALIZAR_PELUCIA, req.body)
