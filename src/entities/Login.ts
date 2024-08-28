@@ -1,16 +1,21 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Cliente } from './Cliente';
+import { Funcionario } from './Funcionario';
 
-@Entity('login')
+@Entity()
 export class Login {
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
-    @Column({ type: 'varchar', length: 255, nullable: true })
-    login: string
+    @Column({ unique: true , nullable: true})
+    username: string;
 
-    @Column({ type: 'varchar', length: 255, nullable: true })
-    token: string
+    @Column({nullable: true})
+    password: string;
 
-    @Column({type: 'boolean', nullable: true})
-    staff: boolean
+    @OneToOne(() => Cliente, cliente => cliente.login)
+    cliente: Cliente;
+
+    @OneToOne(() => Funcionario, funcionario => funcionario.login)
+    funcionario: Funcionario;
 }

@@ -7,7 +7,7 @@ import { Pedido } from './Pedido'
 export class Cliente {
     @PrimaryGeneratedColumn()
     id: number
-
+    
     @Column({type: 'varchar', nullable: true})
     nome: string
 

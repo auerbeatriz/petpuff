@@ -26,7 +26,7 @@ export class ClienteRepository {
                 endereco: true
             },
             where: {
-                login: { login }
+                login: { username: login }
             }
         })
 
@@ -51,5 +51,28 @@ export class ClienteRepository {
                 endereco
             })
         }
+    }
+
+
+    static async findById(id: number): Promise<Cliente | null> {
+        const clienteRepository = DataBaseConnection.getRepository(Cliente);
+        const cliente = await clienteRepository.findOne({ where: { id } });
+        return cliente || null;
+    }
+
+    static async createCliente(email: string, nome: string, sobrenome: string, cpf: string, celular: string, login: Cliente['login']): Promise<Cliente> {
+        const repository = DataBaseConnection.getRepository(Cliente);
+        const cliente = repository.create({ email, nome, sobrenome, cpf, celular, login });
+        return repository.save(cliente);
+    }
+
+    static async findByEmail(email: string): Promise<Cliente | null> {
+        const repository = DataBaseConnection.getRepository(Cliente);
+        return repository.findOne({ where: { email }, relations: ['login'] });
+    }
+
+    static async findByCpf(cpf: string): Promise<Cliente | null> {
+        const repository = DataBaseConnection.getRepository(Cliente);
+        return repository.findOne({ where: { cpf }, relations: ['login'] });
     }
 }

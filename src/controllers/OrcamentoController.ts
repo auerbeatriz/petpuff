@@ -22,7 +22,7 @@ export class OrcamentoController {
             const input = req.body
             const clienteId = Number(input.clienteId)
 
-            const cliente = await ClienteRepository.get(clienteId)
+            const cliente = await ClienteRepository.findById(clienteId)
             if(!cliente) {
                 throw new BadRequestError(`Nenhum cliente associado ao id ${ clienteId }`)
             }
@@ -115,6 +115,7 @@ export class OrcamentoController {
         }
     }
 
+    //funcionario
     async responderOrcamento(req: Request, res: Response) {
         try {
             CommonHelper.validarInput(Schema.RESPONDER_ORCAMENTO, req.body)
@@ -135,6 +136,7 @@ export class OrcamentoController {
         }
     }
 
+    //funcionario
     async atualizarPelucia(req: Request, res: Response) {
         try {
             CommonHelper.validarInput(Schema.ATUALIZAR_PELUCIA, req.body)
